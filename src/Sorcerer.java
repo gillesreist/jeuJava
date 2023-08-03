@@ -1,7 +1,7 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Sorcerer {
-    private String name;
+    private String name = "Cannon fodder";
     private int minHealth = 3;
     private int maxHealth = 8;
     private int lifeLevel = ThreadLocalRandom.current().nextInt(minHealth, maxHealth + 1);
