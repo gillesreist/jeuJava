@@ -2,6 +2,16 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
+
+    public void startMenu() {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("What would you like to do ?");
+        System.out.println("1 - Create a character");
+        System.out.println("2 - Start the adventure");
+        System.out.println("Q - quit the game");
+
+
+    }
     public CreateCharacter run() {
         boolean characterFinished = false;
         String userEntry = "";
