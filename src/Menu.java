@@ -2,15 +2,23 @@ import java.util.Scanner;
 
 public class Menu {
 
+
     private boolean run;
     private String menuState;
     private String characterClass = "";
+    private String characterName = "";
     Warrior warrior;
     Sorcerer sorcerer;
+    Scanner keyboard = new Scanner(System.in);
+
 
     public Menu() {
+        menuState = "startMenu";
         run = true;
-        menuState = ("startMenu");
+    }
+
+    public String getMenuState() {
+        return menuState;
     }
 
     public boolean isRunning() {
@@ -22,228 +30,143 @@ public class Menu {
     }
 
     public void chooseNextStep(String menuState, String userEntry) {
-        Scanner keyboard = new Scanner(System.in);
-
         switch (menuState) {
+            case "startMenu" :
+                startMenu(userEntry);
+                break;
+            case "characterCreation" :
+                characterCreation(userEntry);
+                break;
+            case "gameStart":
+                gameStart(userEntry);
+                break;
+            case "chooseClass":
+                chooseClass(userEntry);
+                break;
+            case "chooseName":
+                chooseName(userEntry);
+                break;
+            case "informations":
+                informations(userEntry);
+                break;
+            case "modifyCharacter":
+                modifyCharacter(userEntry);
+                break;
+        }
+    }
 
-            case "startMenu":
+    public void startMenu(String userEntry) {
 
-                switch (userEntry) {
+        switch (userEntry) {
 
-                    case "1":
-                        this.menuState = "characterCreation";
-                        chooseNextStep("");
-                        break;
-                    case "2":
-                        this.menuState = "gameStart";
-                        chooseNextStep("");
-                        break;
-                    case "3":
-                        this.run = false;
-                        break;
-                    default:
-                        System.out.println("What would you like to do ?");
-                        System.out.println("1 - Create a character");
-                        System.out.println("2 - Start the adventure");
-                        System.out.println("3 - quit the game");
+            case "1":
+                menuState = "characterCreation";
+                characterCreation("");
+                break;
+            case "2":
+                menuState = "gameStart";
+                gameStart("");
+                break;
+            case "3":
+                this.run = false;
+                break;
+            default:
+                System.out.println("What would you like to do ?");
+                System.out.println("1 - Create a character");
+                System.out.println("2 - Start the adventure");
+                System.out.println("3 - quit the game");
+        }
+    }
+
+    public void characterCreation(String userEntry) {
+
+        switch (userEntry) {
+
+            case "1":
+                if (this.characterClass.isEmpty()) {
+                    menuState = "chooseClass";
+                    chooseClass("");
+                } else {
+                    menuState = "chooseName";
+                    chooseName("");
                 }
                 break;
-
-            case "characterCreation":
-
-                switch (userEntry) {
-
-                    case "1" :
-                        if (this.characterClass.isEmpty()) {
-                            this.menuState = "chooseClass";
-                            chooseNextStep("");
-                        } else {
-                            this.menuState = "chooseName";
-                            chooseNextStep("");
-                        }
-                        break;
-                    case "2" :
-                        System.out.println("informations");
-                        chooseNextStep("");
-                        break;
-                    case "3" :
-                        this.menuState = "modifyCharacter";
-                        chooseNextStep("");
-                        break;
-                    case "4" :
-                        this.menuState = "startMenu";
-                        chooseNextStep("");
-                        break;
-                    default :
-                        if (this.characterClass.isEmpty()) {
-                            System.out.println("1 - Choose the class of your character");
-                        } else {
-                            System.out.println("1 - Choose the name of your character");
-
-                        }
-                        System.out.println("2 - See your character informations");
-                        System.out.println("3 - Modify your character");
-                        System.out.println("4 - return to main menu");
-                }
-
+            case "2":
+                informations("");
                 break;
-
-
-            case "gameStart" :
-
-                switch (userEntry) {
-                    default :
-                        System.out.println("you can't yet");
-                        this.menuState = "startMenu";
-                        chooseNextStep("");
+            case "3":
+                menuState = "modifyCharacter";
+                modifyCharacter("");
+                break;
+            case "4":
+                menuState = "startMenu";
+                startMenu("");
+                break;
+            default:
+                if (this.characterClass.isEmpty()) {
+                    System.out.println("1 - Choose the class of your character");
+                } else {
+                    System.out.println("1 - Choose the name of your character");
 
                 }
+                System.out.println("2 - See your character informations");
+                System.out.println("3 - Modify your character");
+                System.out.println("4 - return to main menu");
+        }
+    }
+
+    public void gameStart(String userEntry) {
+        switch (userEntry) {
+            default:
+                System.out.println("you can't yet");
+                menuState = "startMenu";
+                startMenu("");
+
+        }
+    }
+
+
+    public void chooseClass(String userEntry) {
+
+        switch (userEntry) {
+            case "1" :
+                this.characterClass = "warrior";
+                menuState = "characterCreation";
+                characterCreation("");
                 break;
-
-            case "chooseClass" :
-
-                switch (userEntry) {
-                    case "1" :
-                        this.characterClass = "warrior";
-                        this.menuState = "characterCreation";
-                        chooseNextStep("");
-                        break;
-                    case "2" :
-                        this.characterClass = "sorcerer";
-                        this.menuState = "characterCreation";
-                        chooseNextStep("");
-                        break;
-                    default :
-                        System.out.println("You want to create :");
-                        System.out.println("1 - A Warrior");
-                        System.out.println("2 - A sorcerer");
-
-                }
+            case "2" :
+                this.characterClass = "sorcerer";
+                menuState = "characterCreation";
+                characterCreation("");
                 break;
-
-
             default :
-                this.menuState = "startMenu";
-                chooseNextStep("");
-
-
+                System.out.println("You want to create :");
+                System.out.println("1 - A Warrior");
+                System.out.println("2 - A sorcerer");
         }
+    }
 
+    public void chooseName(String userEntry) {
 
     }
 
-
-    public String getMenuState() {
-        return menuState;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public CreateCharacter run() {
-        boolean characterFinished = false;
-        String userEntry = "";
-
-        Scanner keyboard = new Scanner(System.in);
-        System.out.println("What would you like to do ?");
-        System.out.println("1 - Create a character");
-        System.out.println("2 - Information about your character");
-        System.out.println("3 - Start the adventure");
-        System.out.println("Q - quit the game");
-
-        CreateCharacter characterInfos = null;
-
-
-        while (!characterFinished) {
-            userEntry = keyboard.nextLine();
-            switch (userEntry) {
-                case "1":
-                    characterInfos = new CreateCharacter();
-
-                    if (characterInfos.getCharacterClass().isEmpty()) {
-                        characterInfos = null;
-                    }
-                    break;
-                case "2":
-                    if (characterInfos == null) {
-                        System.out.println("You must create a character first.");
-                    } else {
-                        System.out.println(characterInfos);
-                        System.out.println("Would you like to change his name ? (y/n)");
-                        userEntry = keyboard.nextLine();
-                        switch (userEntry) {
-                            case "y":
-                                System.out.println("Enter the new name of your character :");
-                                characterInfos.setCharacterName(keyboard.nextLine());
-                                System.out.println("Your character new name is "+characterInfos.getCharacterName());
-                                break;
-                            case "n":
-                                break;
-                            default :
-                                System.out.println("You must enter 'y' or 'n'.");
-                        }
-                        System.out.println("Would you like to change his class ? (y/n)");
-                        userEntry = keyboard.nextLine();
-                        switch (userEntry) {
-                            case "y":
-                                if (characterInfos.getCharacterClass().equals("warrior")) {
-                                    characterInfos.setCharacterClass("sorcerer");
-                                } else {
-                                    characterInfos.setCharacterClass("warrior");
-                                }
-                                System.out.println("You have switched your character class.");
-                                break;
-                            case "n":
-                                break;
-                            default :
-                                System.out.println("You must enter 'y' or 'n'.");
-                        }
-
-                    }
-                    break;
-                case "3":
-                    if (characterInfos == null) {
-                        System.out.println("You must create a character first.");
-                    } else {
-                        characterFinished = true;
-                    }
-
-                    break;
-                case "q":
-                    System.out.println("Goodbye");
-                    System.exit(0);
-                default:
-                    System.out.println("You can only choose among the proposals.");
-            }
-            System.out.println("You are back on the main menu.");
+    public void informations(String userEntry) {
+        if (this.characterClass.isEmpty()) {
+            System.out.println("You must chose a class first.");
+        } else if (this.characterName.isEmpty()) {
+            System.out.println("The class of your character is "+this.characterClass);
+        } else {
+            System.out.println("The class of your character is "+this.characterClass+" and his name is "+this.characterName);
         }
-        return characterInfos;
+        keyboard.nextLine();
+        characterCreation("");
     }
 
-
+    public void modifyCharacter(String userEntry) {
+        System.out.println("not yet");
+        keyboard.nextLine();
+        menuState = "characterCreation";
+        characterCreation("");
+    }
 
 }
-
-
-
-
-
