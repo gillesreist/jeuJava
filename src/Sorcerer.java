@@ -26,7 +26,7 @@ public class Sorcerer {
     }
 
     public String toString(){//overriding the toString() method
-        return name+" "+lifeLevel+" "+attackStrength;
+        return name+" is a great sorcerer with "+lifeLevel+" health points and "+attackStrength+" attack strength.";
     }
     public String getName() {
         return name;
