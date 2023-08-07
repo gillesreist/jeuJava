@@ -2,15 +2,17 @@ import java.util.Scanner;
 public class Menu {
     private boolean run;
     private String menuState;
-    private String characterClass = "";
-    private String characterName = "";
-    Warrior warrior;
-    Sorcerer sorcerer;
-    Scanner keyboard = new Scanner(System.in);
-
+    private String characterClass;
+    private String characterName;
+    Character character;
+    Game game;
+    Scanner keyboard;
     public Menu() {
         menuState = "startMenu";
         run = true;
+        characterClass = "";
+        characterName = "";
+        keyboard = new Scanner(System.in);
     }
 
     public String getMenuState() {
@@ -48,23 +50,14 @@ public class Menu {
             case "modifyCharacter":
                 modifyCharacter(userEntry);
                 break;
-            case "changeWarriorName":
-                changeWarriorName(userEntry);
+            case "changeCharacterName":
+                changeCharacterName(userEntry);
                 break;
-            case "changeWarriorHealth":
-                changeWarriorHealth(userEntry);
+            case "changeCharacterHealth":
+                changeCharacterHealth(userEntry);
                 break;
-            case "changeWarriorStrength":
-                changeWarriorStrength(userEntry);
-                break;
-            case "changeSorcererName":
-                changeSorcererName(userEntry);
-                break;
-            case "changeSorcererHealth":
-                changeSorcererHealth(userEntry);
-                break;
-            case "changeSorcererStrength":
-                changeSorcererStrength(userEntry);
+            case "changeCharacterStrength":
+                changeCharacterStrength(userEntry);
                 break;
         }
     }
@@ -139,14 +132,15 @@ public class Menu {
                 if (this.characterName.isEmpty()) {
                     System.out.println("You are not supposed to be here yet");
                 } else {
-                    System.out.println("You can't yet");
+                    System.out.println(this.characterName+" is beginning his adventure !");
+                    game = new Game(character);
+                    game.play();
                 }
                 menuState = "startMenu";
                 startMenu("");
 
         }
     }
-
 
     private void chooseClass(String userEntry) {
 
@@ -175,9 +169,9 @@ public class Menu {
         }
         System.out.println("All may salute the mighty "+this.characterName+"!");
         if (characterClass.equals("warrior")) {
-            warrior = new Warrior(this.characterName);
+            character = new Warrior(this.characterName);
         } else {
-            sorcerer = new Sorcerer(this.characterName);
+            character = new Sorcerer(this.characterName);
         }
         keyboard.nextLine();
         characterCreation("");
@@ -189,12 +183,7 @@ public class Menu {
         } else if (this.characterName.isEmpty()) {
             System.out.println("The class of your character is "+this.characterClass);
         } else {
-            if (this.characterClass.equals("warrior")) {
-                System.out.println(warrior);
-            } else if (this.characterClass.equals("sorcerer")) {
-                System.out.println(sorcerer);
-
-            }
+            System.out.println(character);
         }
         keyboard.nextLine();
         characterCreation("");
@@ -220,68 +209,38 @@ public class Menu {
                     System.out.println("2 - No");
             }
         } else {
-            if (this.characterClass.equals("warrior")) {
-                switch (userEntry) {
-                    case "1":
-                        menuState = "changeWarriorName";
-                        changeWarriorName("");
-                        break;
-                    case "2":
-                        menuState = "changeWarriorHealth";
-                        changeWarriorHealth("");
-                        break;
-                    case "3":
-                        menuState = "changeWarriorStrength";
-                        changeWarriorStrength("");
-                        break;
-                    case "q":
-                        menuState = "characterCreation";
-                        characterCreation("");
-                        break;
-                    default:
-                        System.out.println("What do you want to change ?");
-                        System.out.println("1 - Your character Name");
-                        System.out.println("2 - Your character Health");
-                        System.out.println("3 - Your character Strength");
-                        System.out.println("Q - Nothing");
-                }
-            } else if (this.characterClass.equals("sorcerer")) {
-                switch (userEntry) {
-                    case "1" :
-                        menuState = "changeSorcererName";
-                        changeSorcererName("");
-                        break;
-                    case "2" :
-                        menuState = "changeSorcererHealth";
-                        changeSorcererHealth("");
-                        break;
-                    case "3" :
-                        menuState = "changeSorcererStrength";
-                        changeSorcererStrength("");
-                        break;
-                    case "q" :
-                        menuState = "characterCreation";
-                        characterCreation("");
-                        break;
-                    default :
-                        System.out.println("What do you want to change ?");
-                        System.out.println("1 - Your character Name");
-                        System.out.println("2 - Your character Health");
-                        System.out.println("3 - Your character Strength");
-                        System.out.println("Q - Nothing");
-                }
-            } else {
-                System.out.println("How did you come here ?");
-                menuState = "characterCreation";
-                characterCreation("");
+            switch (userEntry) {
+                case "1":
+                    menuState = "changeCharacterName";
+                    changeCharacterName("");
+                    break;
+                case "2":
+                    menuState = "changeCharacterHealth";
+                    changeCharacterHealth("");
+                    break;
+                case "3":
+                    menuState = "changeCharacterStrength";
+                    changeCharacterStrength("");
+                    break;
+                case "q":
+                    menuState = "characterCreation";
+                    characterCreation("");
+                    break;
+                default:
+                    System.out.println("What do you want to change ?");
+                    System.out.println("1 - Your character Name");
+                    System.out.println("2 - Your character Health");
+                    System.out.println("3 - Your character Strength");
+                    System.out.println("Q - Nothing");
             }
         }
     }
 
-    private void changeWarriorName(String userEntry) {
+    private void changeCharacterName(String userEntry) {
         if (!userEntry.isEmpty()) {
-            this.warrior.setName(userEntry);
-            System.out.println("Your characters name is now "+ this.warrior.getName());
+            this.character.setName(userEntry);
+            this.characterName = userEntry;
+            System.out.println("Your characters name is now "+ this.character.getName());
             keyboard.nextLine();
             menuState = "modifyCharacter";
             modifyCharacter("");
@@ -290,68 +249,29 @@ public class Menu {
         }
     }
 
-    private void changeWarriorHealth(String userEntry) {
+    private void changeCharacterHealth(String userEntry) {
         int userEntryInt = Utilities.toIntIfValid(userEntry);
-        if (userEntryInt <= warrior.getMaxHealth() && userEntryInt >= warrior.getMinHealth() ) {
-            warrior.setLifeLevel(userEntryInt);
-            System.out.println("Your characters health is now "+ warrior.getLifeLevel());
+        if (userEntryInt <= character.getMaxHealth() && userEntryInt >= character.getMinHealth() ) {
+            character.setLifeLevel(userEntryInt);
+            System.out.println("Your characters health is now "+ character.getLifeLevel());
             keyboard.nextLine();
             menuState = "modifyCharacter";
             modifyCharacter("");
         } else {
-            System.out.println("Type the new health of your character between "+warrior.getMinHealth()+" and "+warrior.getMaxHealth());
+            System.out.println("Type the new health of your character between "+character.getMinHealth()+" and "+character.getMaxHealth());
         }
     }
 
-    private void changeWarriorStrength(String userEntry) {
+    private void changeCharacterStrength(String userEntry) {
         int userEntryInt = Utilities.toIntIfValid(userEntry);
-        if (userEntryInt <= warrior.getMaxStrength() && userEntryInt >= warrior.getMinStrength() ) {
-            warrior.setAttackStrength(userEntryInt);
-            System.out.println("Your characters strength is now "+ warrior.getAttackStrength());
+        if (userEntryInt <= character.getMaxStrength() && userEntryInt >= character.getMinStrength() ) {
+            character.setAttackStrength(userEntryInt);
+            System.out.println("Your characters strength is now "+ character.getAttackStrength());
             keyboard.nextLine();
             menuState = "modifyCharacter";
             modifyCharacter("");
         } else {
-            System.out.println("Type the new strength of your character between "+warrior.getMinStrength()+" and "+warrior.getMaxStrength());
-        }
-    }
-
-    private void changeSorcererName(String userEntry) {
-        if (!userEntry.isEmpty()) {
-            this.sorcerer.setName(userEntry);
-            System.out.println("Your characters name is now "+ this.sorcerer.getName());
-            keyboard.nextLine();
-            menuState = "modifyCharacter";
-            modifyCharacter("");
-        } else {
-            System.out.println("Type the new name of your character.");
-        }
-
-    }
-
-    private void changeSorcererHealth(String userEntry) {
-        int userEntryInt = Utilities.toIntIfValid(userEntry);
-        if (userEntryInt <= sorcerer.getMaxHealth() && userEntryInt >= sorcerer.getMinHealth() ) {
-            sorcerer.setLifeLevel(userEntryInt);
-            System.out.println("Your characters health is now "+ sorcerer.getLifeLevel());
-            keyboard.nextLine();
-            menuState = "modifyCharacter";
-            modifyCharacter("");
-        } else {
-            System.out.println("Type the new health of your character between "+sorcerer.getMinHealth()+" and "+sorcerer.getMaxHealth());
-        }
-    }
-
-    private void changeSorcererStrength(String userEntry) {
-        int userEntryInt = Utilities.toIntIfValid(userEntry);
-        if (userEntryInt <= sorcerer.getMaxStrength() && userEntryInt >= sorcerer.getMinStrength() ) {
-            sorcerer.setAttackStrength(userEntryInt);
-            System.out.println("Your characters strength is now "+ sorcerer.getAttackStrength());
-            keyboard.nextLine();
-            menuState = "modifyCharacter";
-            modifyCharacter("");
-        } else {
-            System.out.println("Type the new strength of your character between "+sorcerer.getMinStrength()+" and "+sorcerer.getMaxStrength());
+            System.out.println("Type the new strength of your character between "+character.getMinStrength()+" and "+character.getMaxStrength());
         }
     }
 

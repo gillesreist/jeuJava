@@ -1,63 +1,33 @@
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Sorcerer {
-    private String name;
-    private int minHealth;
-    private int maxHealth;
-    private int lifeLevel;
-    private int minStrength;
-    private int maxStrength;
-    private int attackStrength;
+public class Sorcerer extends Character {
     private Spell spell;
 
     public Sorcerer() {
-        this.minHealth = 3;
-        this.maxHealth = 8;
-        this.minStrength = 6;
-        this.maxStrength = 15;
-        this.name = "Cannon Fodder";
-        this.lifeLevel = ThreadLocalRandom.current().nextInt(this.minHealth, this.maxHealth + 1);
-        this.attackStrength = ThreadLocalRandom.current().nextInt(this.minStrength, this.maxStrength+ 1);
+        this.setMinHealth(3);
+        this.setMaxHealth(8);
+        this.setMinStrength(6);
+        this.setMaxStrength(15);
+        this.setName("BookWorm");
+        this.setLifeLevel(ThreadLocalRandom.current().nextInt(this.getMinHealth(), this.getMaxHealth() + 1));
+        this.setAttackStrength(ThreadLocalRandom.current().nextInt(this.getMinStrength(), this.getMaxStrength()+ 1));
         spell = new Spell();
     }
 
     public Sorcerer(String name) {
         this();
-        this.name = name;
+        this.setName(name);
     }
 
     public Sorcerer(String name, int lifeLevel, int attackStrength) {
         this();
-        this.name = name;
-        this.lifeLevel = lifeLevel;
-        this.attackStrength = attackStrength;
+        this.setName(name);
+        this.setLifeLevel(lifeLevel);
+        this.setAttackStrength(attackStrength);
     }
 
     public String toString(){//overriding the toString() method
-        return name+" is a great sorcerer with "+lifeLevel+" health points and "+attackStrength+" attack strength.";
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getLifeLevel() {
-        return lifeLevel;
-    }
-
-    public void setLifeLevel(int lifeLevel) {
-        this.lifeLevel = lifeLevel;
-    }
-
-    public int getAttackStrength() {
-        return attackStrength;
-    }
-
-    public void setAttackStrength(int attackStrength) {
-        this.attackStrength = attackStrength;
+        return this.getName()+" is a great sorcerer with "+ this.getLifeLevel() +" health points and "+ this.getAttackStrength() +" attack strength.";
     }
 
     public Spell getSpell() {
@@ -68,20 +38,5 @@ public class Sorcerer {
         this.spell = spell;
     }
 
-    public int getMinHealth() {
-        return minHealth;
-    }
-
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public int getMinStrength() {
-        return minStrength;
-    }
-
-    public int getMaxStrength() {
-        return maxStrength;
-    }
 }
 
