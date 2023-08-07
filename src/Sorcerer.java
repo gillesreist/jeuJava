@@ -1,28 +1,36 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Sorcerer {
-    private String name = "Cannon fodder";
-    private int minHealth = 3;
-    private int maxHealth = 8;
-    private int lifeLevel = ThreadLocalRandom.current().nextInt(minHealth, maxHealth + 1);
-    private int minStrength = 6;
-    private int maxStrength = 15;
-    private int attackStrength = ThreadLocalRandom.current().nextInt(minStrength, maxStrength + 1);
-    private Spell spell = new Spell();
+    private String name;
+    private int minHealth;
+    private int maxHealth;
+    private int lifeLevel;
+    private int minStrength;
+    private int maxStrength;
+    private int attackStrength;
+    private Spell spell;
 
-
-    public Sorcerer(String name, int lifeLevel, int attackStrength) {
-        this.name = name;
-        this.lifeLevel = lifeLevel;
-        this.attackStrength = attackStrength;
-
+    public Sorcerer() {
+        this.minHealth = 3;
+        this.maxHealth = 8;
+        this.minStrength = 6;
+        this.maxStrength = 15;
+        this.name = "Cannon Fodder";
+        this.lifeLevel = ThreadLocalRandom.current().nextInt(this.minHealth, this.maxHealth + 1);
+        this.attackStrength = ThreadLocalRandom.current().nextInt(this.minStrength, this.maxStrength+ 1);
+        spell = new Spell();
     }
 
     public Sorcerer(String name) {
+        this();
         this.name = name;
     }
 
-    public Sorcerer() {
+    public Sorcerer(String name, int lifeLevel, int attackStrength) {
+        this();
+        this.name = name;
+        this.lifeLevel = lifeLevel;
+        this.attackStrength = attackStrength;
     }
 
     public String toString(){//overriding the toString() method
@@ -58,6 +66,22 @@ public class Sorcerer {
 
     public void setSpell(Spell spell) {
         this.spell = spell;
+    }
+
+    public int getMinHealth() {
+        return minHealth;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getMinStrength() {
+        return minStrength;
+    }
+
+    public int getMaxStrength() {
+        return maxStrength;
     }
 }
 

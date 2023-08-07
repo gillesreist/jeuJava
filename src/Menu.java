@@ -120,9 +120,10 @@ public class Menu {
             default:
                 if (this.characterClass.isEmpty()) {
                     System.out.println("1 - Choose the class of your character");
-                } else {
+                } else if (this.characterName.isEmpty()){
                     System.out.println("1 - Choose the name of your character");
-
+                } else {
+                    System.out.println("1 - See the name of your character.");
                 }
                 if (!this.characterClass.isEmpty()) {
                     System.out.println("2 - See your character informations");
@@ -278,7 +279,80 @@ public class Menu {
     }
 
     private void changeWarriorName(String userEntry) {
-        
+        if (!userEntry.isEmpty()) {
+            this.warrior.setName(userEntry);
+            System.out.println("Your characters name is now "+ this.warrior.getName());
+            keyboard.nextLine();
+            menuState = "modifyCharacter";
+            modifyCharacter("");
+        } else {
+            System.out.println("Type the new name of your character.");
+        }
+    }
+
+    private void changeWarriorHealth(String userEntry) {
+        int userEntryInt = Utilities.toIntIfValid(userEntry);
+        if (userEntryInt <= warrior.getMaxHealth() && userEntryInt >= warrior.getMinHealth() ) {
+            warrior.setLifeLevel(userEntryInt);
+            System.out.println("Your characters health is now "+ warrior.getLifeLevel());
+            keyboard.nextLine();
+            menuState = "modifyCharacter";
+            modifyCharacter("");
+        } else {
+            System.out.println("Type the new health of your character between "+warrior.getMinHealth()+" and "+warrior.getMaxHealth());
+        }
+    }
+
+    private void changeWarriorStrength(String userEntry) {
+        int userEntryInt = Utilities.toIntIfValid(userEntry);
+        if (userEntryInt <= warrior.getMaxStrength() && userEntryInt >= warrior.getMinStrength() ) {
+            warrior.setAttackStrength(userEntryInt);
+            System.out.println("Your characters strength is now "+ warrior.getAttackStrength());
+            keyboard.nextLine();
+            menuState = "modifyCharacter";
+            modifyCharacter("");
+        } else {
+            System.out.println("Type the new strength of your character between "+warrior.getMinStrength()+" and "+warrior.getMaxStrength());
+        }
+    }
+
+    private void changeSorcererName(String userEntry) {
+        if (!userEntry.isEmpty()) {
+            this.sorcerer.setName(userEntry);
+            System.out.println("Your characters name is now "+ this.sorcerer.getName());
+            keyboard.nextLine();
+            menuState = "modifyCharacter";
+            modifyCharacter("");
+        } else {
+            System.out.println("Type the new name of your character.");
+        }
+
+    }
+
+    private void changeSorcererHealth(String userEntry) {
+        int userEntryInt = Utilities.toIntIfValid(userEntry);
+        if (userEntryInt <= sorcerer.getMaxHealth() && userEntryInt >= sorcerer.getMinHealth() ) {
+            sorcerer.setLifeLevel(userEntryInt);
+            System.out.println("Your characters health is now "+ sorcerer.getLifeLevel());
+            keyboard.nextLine();
+            menuState = "modifyCharacter";
+            modifyCharacter("");
+        } else {
+            System.out.println("Type the new health of your character between "+sorcerer.getMinHealth()+" and "+sorcerer.getMaxHealth());
+        }
+    }
+
+    private void changeSorcererStrength(String userEntry) {
+        int userEntryInt = Utilities.toIntIfValid(userEntry);
+        if (userEntryInt <= sorcerer.getMaxStrength() && userEntryInt >= sorcerer.getMinStrength() ) {
+            sorcerer.setAttackStrength(userEntryInt);
+            System.out.println("Your characters strength is now "+ sorcerer.getAttackStrength());
+            keyboard.nextLine();
+            menuState = "modifyCharacter";
+            modifyCharacter("");
+        } else {
+            System.out.println("Type the new strength of your character between "+sorcerer.getMinStrength()+" and "+sorcerer.getMaxStrength());
+        }
     }
 
 }

@@ -1,28 +1,36 @@
-import java.net.URL;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Warrior {
-    private String name = "Cannon Fodder";
-    private int minHealth = 5;
-    private int maxHealth = 10;
-    private int lifeLevel = ThreadLocalRandom.current().nextInt(minHealth, maxHealth + 1);
-    private int minStrength = 5;
-    private int maxStrength = 10;
-    private int attackStrength = ThreadLocalRandom.current().nextInt(minStrength, maxStrength + 1);
-    private Weapon weapon = new Weapon();
+    private String name;
+    private int minHealth;
+    private int maxHealth;
+    private int lifeLevel;
+    private int minStrength;
+    private int maxStrength;
+    private int attackStrength;
+    private Weapon weapon;
 
-    public Warrior(String name, int lifeLevel, int attackStrength) {
-        this.name = name;
-        this.lifeLevel = lifeLevel;
-        this.attackStrength = attackStrength;
-
+    public Warrior() {
+        this.minHealth = 5;
+        this.maxHealth = 10;
+        this.minStrength = 5;
+        this.maxStrength = 10;
+        this.name = "Cannon Fodder";
+        this.lifeLevel = ThreadLocalRandom.current().nextInt(this.minHealth, this.maxHealth + 1);
+        this.attackStrength = ThreadLocalRandom.current().nextInt(this.minStrength, this.maxStrength+ 1);
+        weapon = new Weapon();
     }
 
     public Warrior(String name) {
+        this();
         this.name = name;
     }
 
-    public Warrior() {
+    public Warrior(String name, int lifeLevel, int attackStrength) {
+        this();
+        this.name = name;
+        this.lifeLevel = lifeLevel;
+        this.attackStrength = attackStrength;
     }
 
     public String toString(){//overriding the toString() method
@@ -61,6 +69,21 @@ public class Warrior {
         this.weapon = weapon;
     }
 
+    public int getMinHealth() {
+        return minHealth;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getMinStrength() {
+        return minStrength;
+    }
+
+    public int getMaxStrength() {
+        return maxStrength;
+    }
 }
 
 
