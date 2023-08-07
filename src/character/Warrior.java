@@ -1,16 +1,13 @@
+package character;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Warrior extends Character {
     private Weapon weapon;
 
+
     public Warrior() {
-        this.setMinHealth(5);
-        this.setMaxHealth(10);
-        this.setMinStrength(5);
-        this.setMaxStrength(10);
-        this.setName("Cannon Fodder");
-        this.setLifeLevel(ThreadLocalRandom.current().nextInt(this.getMinHealth(), this.getMaxHealth() + 1));
-        this.setAttackStrength(ThreadLocalRandom.current().nextInt(this.getMinStrength(), this.getMaxStrength()+ 1));
+        super();
         weapon = new Weapon();
     }
 
@@ -38,6 +35,16 @@ public class Warrior extends Character {
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
+
+    protected void setCharacterMinMax() {
+        this.setMinHealth(5);
+        this.setMaxHealth(10);
+        this.setMinStrength(5);
+        this.setMaxStrength(10);
+        this.setLifeLevel(ThreadLocalRandom.current().nextInt(this.getMinHealth(), this.getMaxHealth() + 1));
+        this.setAttackStrength(ThreadLocalRandom.current().nextInt(this.getMinStrength(), this.getMaxStrength()+ 1));
+    }
+
 
 }
 

@@ -1,12 +1,16 @@
+package gameEngine;
+
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
+
+import character.Character;
+import exceptions.CharacterOffBoardException;
 
 public class Game {
     int characterPosition;
     int diceResult;
     Character character;
     Scanner keyboard;
-    String userEntry;
 
     Game(Character character) {
         characterPosition = 1;
@@ -17,7 +21,13 @@ public class Game {
 
     public void play() {
         System.out.println(character.getName()+ " is on the case number " + characterPosition);
-        moveForward();
+        while (characterPosition < 64) {
+            try {
+                moveForward(characterPosition);
+            } catch(CharacterOffBoardException e) {
+                System.out.println(e.getMessage());;
+            }
+        }
 
         System.out.println("Congratulations, you finished your adventure!");
 
@@ -38,14 +48,16 @@ public class Game {
         }
     }
 
-    private void moveForward() {
-        while (characterPosition < 64) {
-            throwDice();
-            characterPosition += diceResult;
-            System.out.println("You threw a "+diceResult);
-            System.out.println(character.getName() + " is on the case number " + characterPosition);
+    private void moveForward(int characterPosition) throws CharacterOffBoardException {
+
+        throwDice();
+        System.out.println("You threw a "+diceResult);
+        if (characterPosition + diceResult > 64) {
+                throw new CharacterOffBoardException("Your character will go too far.");
+            }
+            this.characterPosition += diceResult;
+            System.out.println(character.getName() + " is on the case number " + this.characterPosition);
             keyboard.nextLine();
-        }
     }
 
     private void throwDice() {

@@ -1,22 +1,17 @@
-import java.util.concurrent.ThreadLocalRandom;
+package character;
 
-public class Character {
+public abstract class Character {
     private String name;
+    private int lifeLevel;
+    private int attackStrength;
     private int minHealth;
     private int maxHealth;
-    private int lifeLevel;
     private int minStrength;
     private int maxStrength;
-    private int attackStrength;
 
     public Character() {
-        this.minHealth = 0;
-        this.maxHealth = 0;
-        this.minStrength = 0;
-        this.maxStrength = 0;
         this.name = "Cannon Fodder";
-        this.lifeLevel = ThreadLocalRandom.current().nextInt(this.minHealth, this.maxHealth + 1);
-        this.attackStrength = ThreadLocalRandom.current().nextInt(this.minStrength, this.maxStrength+ 1);
+        setCharacterMinMax();
     }
 
     public Character(String name) {
@@ -31,9 +26,7 @@ public class Character {
         this.attackStrength = attackStrength;
     }
 
-    public String toString(){//overriding the toString() method
-        return name+" is a great character with "+lifeLevel+" health points and "+attackStrength+" attack strength.";
-    }
+    public abstract String toString();
 
     public String getName() {
         return name;
@@ -91,4 +84,5 @@ public class Character {
         this.maxStrength = maxStrength;
     }
 
+    protected abstract void setCharacterMinMax();
 }

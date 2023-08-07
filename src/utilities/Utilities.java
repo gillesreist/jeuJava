@@ -1,3 +1,5 @@
+package utilities;
+
 public class Utilities {
     public static int toIntIfValid(String numbers) {
         int result;

@@ -1,3 +1,10 @@
+package gameEngine;
+
+import character.Character;
+import character.Sorcerer;
+import character.Warrior;
+import utilities.Utilities;
+
 import java.util.Scanner;
 public class Menu {
     private boolean run;
@@ -36,7 +43,7 @@ public class Menu {
                 characterCreation(userEntry);
                 break;
             case "gameStart":
-                gameStart(userEntry);
+                gameStart();
                 break;
             case "chooseClass":
                 chooseClass(userEntry);
@@ -45,7 +52,7 @@ public class Menu {
                 chooseName(userEntry);
                 break;
             case "informations":
-                informations(userEntry);
+                informations();
                 break;
             case "modifyCharacter":
                 modifyCharacter(userEntry);
@@ -72,7 +79,7 @@ public class Menu {
                 break;
             case "2":
                 menuState = "gameStart";
-                gameStart("");
+                gameStart();
                 break;
             case "q":
                 this.run = false;
@@ -100,7 +107,7 @@ public class Menu {
                 }
                 break;
             case "2":
-                informations("");
+                informations();
                 break;
             case "3":
                 menuState = "modifyCharacter";
@@ -126,20 +133,16 @@ public class Menu {
         }
     }
 
-    private void gameStart(String userEntry) {
-        switch (userEntry) {
-            default:
-                if (this.characterName.isEmpty()) {
-                    System.out.println("You are not supposed to be here yet");
-                } else {
-                    System.out.println(this.characterName+" is beginning his adventure !");
-                    game = new Game(character);
-                    game.play();
-                }
-                menuState = "startMenu";
-                startMenu("");
-
+    private void gameStart() {
+        if (this.characterName.isEmpty()) {
+            System.out.println("You are not supposed to be here yet");
+        } else {
+            System.out.println(this.characterName+" is beginning his adventure !");
+            game = new Game(character);
+            game.play();
         }
+        menuState = "startMenu";
+        startMenu("");
     }
 
     private void chooseClass(String userEntry) {
@@ -157,7 +160,7 @@ public class Menu {
                 break;
             default :
                 System.out.println("You want to create :");
-                System.out.println("1 - A Warrior");
+                System.out.println("1 - A character.Warrior");
                 System.out.println("2 - A sorcerer");
         }
     }
@@ -177,7 +180,7 @@ public class Menu {
         characterCreation("");
     }
 
-    private void informations(String userEntry) {
+    private void informations() {
         if (this.characterClass.isEmpty()) {
             System.out.println("You must chose a class first.");
         } else if (this.characterName.isEmpty()) {
