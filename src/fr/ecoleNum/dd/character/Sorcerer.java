@@ -1,25 +1,21 @@
-package character;
+package fr.ecoleNum.dd.character;
+
+import fr.ecoleNum.dd.gameComponents.boardGame.Spell;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Sorcerer extends Character {
-    private Spell spell;
 
     public Sorcerer() {
         super();
-        spell = new Spell();
     }
 
     public Sorcerer(String name) {
-        this();
-        this.setName(name);
+        super(name);
     }
 
     public Sorcerer(String name, int lifeLevel, int attackStrength) {
-        this();
-        this.setName(name);
-        this.setLifeLevel(lifeLevel);
-        this.setAttackStrength(attackStrength);
+        super(name, lifeLevel, attackStrength);
     }
 
     protected void setCharacterMinMax() {

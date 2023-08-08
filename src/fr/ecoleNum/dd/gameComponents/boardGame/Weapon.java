@@ -1,12 +1,17 @@
-package character;
+package fr.ecoleNum.dd.gameComponents.boardGame;
 
-public class Weapon {
+public class Weapon extends Case {
     private String name;
     private int attackLevel;
 
-    Weapon() {
+    public Weapon() {
         name = "sword";
         attackLevel = 1;
+    }
+
+    @Override
+    public String toString() {
+        return "A sword is stuck into a rock.";
     }
 
     public String getName() {

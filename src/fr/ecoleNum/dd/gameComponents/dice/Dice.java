@@ -1,4 +1,4 @@
-package gameComponents;
+package fr.ecoleNum.dd.gameComponents.dice;
 
 public interface Dice {
 

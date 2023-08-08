@@ -1,9 +1,9 @@
-package gameEngine;
+package fr.ecoleNum.dd.gameEngine;
 
-import character.Character;
-import character.Sorcerer;
-import character.Warrior;
-import utilities.Utilities;
+import fr.ecoleNum.dd.character.Character;
+import fr.ecoleNum.dd.character.Sorcerer;
+import fr.ecoleNum.dd.character.Warrior;
+import fr.ecoleNum.dd.utilities.Utilities;
 import java.lang.reflect.Method;
 
 import java.util.Scanner;

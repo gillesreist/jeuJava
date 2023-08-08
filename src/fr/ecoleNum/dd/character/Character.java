@@ -1,4 +1,4 @@
-package character;
+package fr.ecoleNum.dd.character;
 
 public abstract class Character {
     private String name;

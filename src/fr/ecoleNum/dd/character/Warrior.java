@@ -1,26 +1,20 @@
-package character;
+package fr.ecoleNum.dd.character;
+
+import fr.ecoleNum.dd.gameComponents.boardGame.Weapon;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Warrior extends Character {
-    private Weapon weapon;
-
-
-    public Warrior() {
+        public Warrior() {
         super();
-        weapon = new Weapon();
     }
 
     public Warrior(String name) {
-        this();
-        this.setName(name);
+        super(name);
     }
 
     public Warrior(String name, int lifeLevel, int attackStrength) {
-        this();
-        this.setName(name);
-        this.setLifeLevel(lifeLevel);
-        this.setAttackStrength(attackStrength);
+        super(name, lifeLevel, attackStrength);
     }
 
     protected void setCharacterMinMax() {

@@ -1,6 +1,6 @@
-package character;
+package fr.ecoleNum.dd.gameComponents.boardGame;
 
-public class Spell {
+public class Spell extends Case {
     private String name;
     private int attackLevel;
 

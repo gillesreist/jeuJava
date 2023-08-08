@@ -1,10 +1,10 @@
-package character;
+package fr.ecoleNum.dd.gameComponents.boardGame;
 
-public class Potion {
+public class Shield extends Case {
     String name;
 
-    Potion() {
-        name = "Mana character.Potion";
+    Shield() {
+        name = "Dragon character.Shield";
     }
 
     public String getName() {

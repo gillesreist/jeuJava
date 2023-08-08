@@ -1,4 +1,4 @@
-package gameComponents;
+package fr.ecoleNum.dd.gameComponents.dice;
 
 import java.util.concurrent.ThreadLocalRandom;
 

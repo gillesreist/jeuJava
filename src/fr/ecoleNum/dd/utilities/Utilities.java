@@ -1,4 +1,4 @@
-package utilities;
+package fr.ecoleNum.dd.utilities;
 
 public class Utilities {
     public static int toIntIfValid(String numbers) {
