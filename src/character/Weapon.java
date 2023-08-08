@@ -1,8 +1,8 @@
 package character;
 
 public class Weapon {
-    String name;
-    int attackLevel;
+    private String name;
+    private int attackLevel;
 
     Weapon() {
         name = "sword";

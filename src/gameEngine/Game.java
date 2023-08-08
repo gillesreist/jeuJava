@@ -3,17 +3,21 @@ import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 import character.Character;
 import exceptions.CharacterOffBoardException;
+import gameComponents.D6;
+import gameComponents.Dice;
+import gameComponents.TwoD6;
 
 public class Game {
-    int characterPosition;
-    int diceResult;
+    private int characterPosition;
     Character character;
     Scanner keyboard;
+    Dice dice;
 
     Game(Character character) {
         characterPosition = 1;
         this.character = character;
         keyboard = new Scanner(System.in);
+        dice = new TwoD6();
     }
 
 
@@ -22,8 +26,8 @@ public class Game {
         while (characterPosition < 64) {
             try {
                 keyboard.nextLine();
-                throwDice();
-                System.out.println("You threw a "+diceResult);
+                dice.throwDice();
+                System.out.println("You threw a "+dice.getValue());
                 moveForward(characterPosition);
             } catch(CharacterOffBoardException e) {
                 System.out.println(e.getMessage());;
@@ -50,15 +54,11 @@ public class Game {
     }
 
     private void moveForward(int characterPosition) throws CharacterOffBoardException {
-        if (characterPosition + diceResult > 64) {
+        if (characterPosition + dice.getValue() > 64) {
             throw new CharacterOffBoardException("Your character will go too far.");
         }
-        this.characterPosition += diceResult;
+        this.characterPosition += dice.getValue();
         System.out.println(character.getName() + " is on the case number " + this.characterPosition);
-    }
-
-    private void throwDice() {
-        diceResult = ThreadLocalRandom.current().nextInt(1, 6 + 1);
     }
 
 }

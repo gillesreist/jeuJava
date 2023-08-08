@@ -44,8 +44,10 @@ public class Menu {
     private void startMenu() {
 
         System.out.println("What would you like to do ?");
-        System.out.println("1 - Create a character");
-        if (character != null) {
+        if (character == null) {
+            System.out.println("1 - Create a character");
+        } else {
+            System.out.println("1 - Go back to your character");
             System.out.println("2 - Start the adventure");
         }
         System.out.println("Q - quit the game");

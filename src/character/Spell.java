@@ -1,8 +1,8 @@
 package character;
 
 public class Spell {
-    String name;
-    int attackLevel;
+    private String name;
+    private int attackLevel;
 
     Spell() {
         name = "fireBolt";
