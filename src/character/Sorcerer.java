@@ -22,10 +22,6 @@ public class Sorcerer extends Character {
         this.setAttackStrength(attackStrength);
     }
 
-    public String toString(){//overriding the toString() method
-        return this.getName()+" is a great sorcerer with "+ this.getLifeLevel() +" health points and "+ this.getAttackStrength() +" attack strength.";
-    }
-
     public Spell getSpell() {
         return spell;
     }

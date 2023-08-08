@@ -30,11 +30,12 @@ public class Menu {
         return this.run;
     }
 
-    public void chooseNextStep(String userEntry) {
-        chooseNextStep(this.menuState, userEntry);
+    public void chooseNextStep() {
+        chooseNextStep(this.menuState);
     }
 
-    public void chooseNextStep(String menuState, String userEntry) {
+    public void chooseNextStep(String menuState) {
+        String userEntry = keyboard.nextLine();
         switch (menuState) {
             case "startMenu" :
                 startMenu(userEntry);
@@ -160,7 +161,7 @@ public class Menu {
                 break;
             default :
                 System.out.println("You want to create :");
-                System.out.println("1 - A character.Warrior");
+                System.out.println("1 - A warrior");
                 System.out.println("2 - A sorcerer");
         }
     }

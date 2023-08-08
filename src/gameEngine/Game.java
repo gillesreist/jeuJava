@@ -23,7 +23,9 @@ public class Game {
         System.out.println(character.getName()+ " is on the case number " + characterPosition);
         while (characterPosition < 64) {
             try {
+                throwDice();
                 moveForward(characterPosition);
+                System.out.println("You threw a "+diceResult);
             } catch(CharacterOffBoardException e) {
                 System.out.println(e.getMessage());;
             }
@@ -49,15 +51,12 @@ public class Game {
     }
 
     private void moveForward(int characterPosition) throws CharacterOffBoardException {
-
-        throwDice();
-        System.out.println("You threw a "+diceResult);
         if (characterPosition + diceResult > 64) {
-                throw new CharacterOffBoardException("Your character will go too far.");
-            }
-            this.characterPosition += diceResult;
-            System.out.println(character.getName() + " is on the case number " + this.characterPosition);
-            keyboard.nextLine();
+            throw new CharacterOffBoardException("Your character will go too far.");
+        }
+        this.characterPosition += diceResult;
+        System.out.println(character.getName() + " is on the case number " + this.characterPosition);
+        keyboard.nextLine();
     }
 
     private void throwDice() {

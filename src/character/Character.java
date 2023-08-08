@@ -26,7 +26,9 @@ public abstract class Character {
         this.attackStrength = attackStrength;
     }
 
-    public abstract String toString();
+    public String toString() {
+        return this.getName()+" has "+ this.getLifeLevel() +" health points and "+ this.getAttackStrength() +" attack strength.";
+    };
 
     public String getName() {
         return name;

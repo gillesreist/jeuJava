@@ -23,10 +23,6 @@ public class Warrior extends Character {
         this.setAttackStrength(attackStrength);
     }
 
-    public String toString(){//overriding the toString() method
-        return this.getName()+" is a great warrior with "+ this.getLifeLevel() +" health points and "+ this.getAttackStrength() +" attack strength.";
-    }
-
 
     public Weapon getWeapon() {
         return weapon;
