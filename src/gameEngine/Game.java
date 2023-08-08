@@ -1,8 +1,6 @@
 package gameEngine;
-
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
-
 import character.Character;
 import exceptions.CharacterOffBoardException;
 
@@ -23,9 +21,10 @@ public class Game {
         System.out.println(character.getName()+ " is on the case number " + characterPosition);
         while (characterPosition < 64) {
             try {
+                keyboard.nextLine();
                 throwDice();
-                moveForward(characterPosition);
                 System.out.println("You threw a "+diceResult);
+                moveForward(characterPosition);
             } catch(CharacterOffBoardException e) {
                 System.out.println(e.getMessage());;
             }
@@ -56,7 +55,6 @@ public class Game {
         }
         this.characterPosition += diceResult;
         System.out.println(character.getName() + " is on the case number " + this.characterPosition);
-        keyboard.nextLine();
     }
 
     private void throwDice() {

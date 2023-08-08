@@ -23,15 +23,6 @@ public class Warrior extends Character {
         this.setAttackStrength(attackStrength);
     }
 
-
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
-
     protected void setCharacterMinMax() {
         this.setMinHealth(5);
         this.setMaxHealth(10);

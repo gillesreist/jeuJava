@@ -22,14 +22,6 @@ public class Sorcerer extends Character {
         this.setAttackStrength(attackStrength);
     }
 
-    public Spell getSpell() {
-        return spell;
-    }
-
-    public void setSpell(Spell spell) {
-        this.spell = spell;
-    }
-
     protected void setCharacterMinMax() {
         this.setMinHealth(3);
         this.setMaxHealth(8);
