@@ -101,6 +101,7 @@ public class Game {
     private void moveForward() throws CharacterOffBoardException {
         characterPosition += dice.getValue();
         try {
+            boardGame.get(characterPosition-1).interaction(character);
             System.out.println("You threw a " + dice.getValue()+"\n"+character.getName() + " is on the case number " + characterPosition+"\n"+boardGame.get(characterPosition - 1));
         } catch (IndexOutOfBoundsException e) {
             throw new CharacterOffBoardException("You went off the board.");
