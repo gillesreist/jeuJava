@@ -10,13 +10,10 @@ import java.util.Scanner;
 public class Menu {
     private boolean run;
     private String menuState;
-    Character character;
-    Game game;
     Scanner keyboard;
     public Menu() {
         menuState = "startMenu";
         run = true;
-        character = null;
         keyboard = new Scanner(System.in);
     }
 
@@ -28,20 +25,12 @@ public class Menu {
         return this.run;
     }
 
-    public void chooseNextStep() {
-        chooseNextStep(this.menuState);
+    public void resetMenu() {
+        this.run = true;
+        menuState = "startMenu";
     }
 
-    public void chooseNextStep(String menuState) {
-        try {
-            Method method = this.getClass().getDeclaredMethod(menuState);
-            method.invoke(this);
-        } catch(Exception e) {
-            System.err.println("Something is broken.");
-        }
-    }
-
-    private void startMenu() {
+    public boolean startMenu(Character character) {
 
         System.out.println("What would you like to do ?");
         if (character == null) {
@@ -58,15 +47,19 @@ public class Menu {
                 menuState = "characterCreation";
                 break;
             case "2":
-                menuState = "gameStart";
+                if (character != null) {
+                    System.out.println(character.getName()+" is beginning his adventure !");
+                    this.run = false;
+                }
                 break;
             case "q":
                 this.run = false;
-                break;
+                return false;
         }
+        return true;
     }
 
-    private void characterCreation() {
+    public void characterCreation(Character character) {
         if (character == null) {
             System.out.println("1 - Choose the class of your character");
         } else {
@@ -79,7 +72,7 @@ public class Menu {
 
             case "1":
                 if (character == null) {
-                    menuState = "chooseClass";
+                    menuState = "createCharacter";
                 } else {
                     menuState = "informations";
                 }
@@ -93,36 +86,24 @@ public class Menu {
         }
     }
 
-    private void gameStart() {
-        if (character == null) {
-            System.out.println("You are not supposed to be here yet");
-        } else {
-            System.out.println(this.character.getName()+" is beginning his adventure !");
-            game = new Game(character);
-            game.play();
+    public Character createCharacter (Character character) {
+        String characterClass = null;
+
+        while (characterClass == null) {
+            System.out.println("You want to create :");
+            System.out.println("1 - A warrior");
+            System.out.println("2 - A sorcerer");
+
+            switch (keyboard.nextLine()) {
+                case "1":
+                    characterClass = "warrior";
+                    break;
+                case "2":
+                    characterClass = "sorcerer";
+                    break;
+            }
         }
-        menuState = "startMenu";
-    }
 
-    private void chooseClass () {
-
-        System.out.println("You want to create :");
-        System.out.println("1 - A warrior");
-        System.out.println("2 - A sorcerer");
-
-        switch (keyboard.nextLine()) {
-            case "1" :
-                menuState = "choosename";
-                chooseName("warrior");
-                break;
-            case "2" :
-                menuState = "choosename";
-                chooseName("sorcerer");
-                break;
-        }
-    }
-
-    private void chooseName(String characterClass) {
         System.out.println("Type the name of your character");
         String characterName = keyboard.nextLine();
 
@@ -134,9 +115,10 @@ public class Menu {
         }
         keyboard.nextLine();
         menuState = "characterCreation";
+        return character;
     }
 
-    private void informations() {
+    public void informations(Character character) {
         if (character == null) {
             System.out.println("You must create your character first.");
         } else {
@@ -151,7 +133,7 @@ public class Menu {
         menuState = "characterCreation";
     }
 
-    private void modifyCharacter() {
+    public void modifyCharacter(Character character) {
         if (character == null) {
             System.out.println("You must create your character first.");
             keyboard.nextLine();
@@ -178,7 +160,7 @@ public class Menu {
         }
     }
 
-    private void changeCharacterName() {
+    public void changeCharacterName(Character character) {
         System.out.println("Type the new name of your character.");
         character.setName(keyboard.nextLine());
         System.out.println("Your characters name is now "+ character.getName());
@@ -186,7 +168,7 @@ public class Menu {
         menuState = "modifyCharacter";
     }
 
-    private void changeCharacterHealth() {
+    public void changeCharacterHealth(Character character) {
         System.out.println("Type the new health of your character between "+character.getMinHealth()+" and "+character.getMaxHealth());
         int userEntryInt = Utilities.toIntIfValid(keyboard.nextLine());
         if (userEntryInt <= character.getMaxHealth() && userEntryInt >= character.getMinHealth() ) {
@@ -197,7 +179,7 @@ public class Menu {
         }
     }
 
-    private void changeCharacterStrength() {
+    public void changeCharacterStrength(Character character) {
         System.out.println("Type the new strength of your character between "+character.getMinStrength()+" and "+character.getMaxStrength());
         int userEntryInt = Utilities.toIntIfValid(keyboard.nextLine());
         if (userEntryInt <= character.getMaxStrength() && userEntryInt >= character.getMinStrength() ) {
@@ -207,4 +189,18 @@ public class Menu {
             menuState = "modifyCharacter";
         }
     }
+
+    public void waitForPlayer(){
+        keyboard.nextLine();
+    }
+
+    public String yesOrNo(){
+        String key = "";
+        while (!key.equals("y") && !key.equals("n")) {
+            System.out.println("You must enter 'y' or 'n'.");
+            key = keyboard.nextLine();
+        }
+        return key;
+    }
+
 }

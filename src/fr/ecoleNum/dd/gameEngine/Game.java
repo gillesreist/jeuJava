@@ -1,4 +1,5 @@
 package fr.ecoleNum.dd.gameEngine;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Scanner;
 import fr.ecoleNum.dd.character.Character;
@@ -6,75 +7,102 @@ import fr.ecoleNum.dd.exceptions.CharacterOffBoardException;
 import fr.ecoleNum.dd.gameComponents.boardGame.*;
 import fr.ecoleNum.dd.gameComponents.dice.Dice;
 import fr.ecoleNum.dd.gameComponents.dice.FakeDice;
-import fr.ecoleNum.dd.gameComponents.dice.TwoD6;
 
 public class Game {
+    private Menu menu;
+    private Character character;
     private int characterPosition;
-    Character character;
-    Scanner keyboard;
-    Dice dice;
-    ArrayList<Case> boardGame;
+    private Dice dice;
+    private ArrayList<Case> boardGame;
+    private boolean run;
+    private boolean gameInProgress;
 
-    Game(Character character) {
-        boardGame = new ArrayList<Case>();
-        characterPosition = 0;
-        this.character = character;
-        keyboard = new Scanner(System.in);
+    public Game() {
+        menu = new Menu();
+        boardGame = new ArrayList<>();
+        character = null;
         dice = new FakeDice();
+        run = true;
+        gameInProgress = false;
         createBoard();
     }
 
-    private void createBoard() {
-            boardGame.add(new EmptyCase());
-            boardGame.add(new Foe());
-            boardGame.add(new Weapon());
-            boardGame.add(new Potion());
+    public boolean isRunning() {
+        return run;
     }
 
+    private void createBoard() {
+        boardGame.add(new EmptyCase());
+        boardGame.add(new Foe());
+        boardGame.add(new Weapon());
+        boardGame.add(new Potion());
+    }
 
-    public void play() {
+    public void start() {
+        System.out.println("Welcome to the dungeon of Ragnarok !");
+        while (isRunning()) {
+            while (menu.isRunning()) {
+                try {
+                    switch (menu.getMenuState()) {
+                        case "startMenu" :
+                            run = menu.startMenu(character);
+                            break;
+                        case "createCharacter" :
+                            character = menu.createCharacter(character);
+                            break;
+                        default :
+                            Method method = menu.getClass().getMethod(menu.getMenuState(), Character.class);
+                            method.invoke(menu, character);
+                    }
+                } catch (Exception e) {
+                    System.err.println(e.toString());
+                    menu.resetMenu();
+                }
+            }
+            if (run) {
+                play();
+            }
+        }
+        System.out.println("Goodbye.");
+    }
+
+    private void play() {
+        gameInProgress = true;
+        characterPosition = 0;
         System.out.println(character.getName()+ " is on the case number " + characterPosition);
         try {
-            while (characterPosition < 64) {
+            while (gameInProgress) {
                     playATurn();
             }
         } catch(CharacterOffBoardException e) {
-            System.out.println(e.getMessage());;
+            gameInProgress = false;
         }
 
         System.out.println("Congratulations, you finished your adventure!");
 
-        System.out.println("Would you like to start another game ? (y/n)");
-        String key = "";
-        while (!key.equals("y") && !key.equals("n")) {
-            key = keyboard.nextLine();
-            switch (key) {
-                case "y":
-                    characterPosition = 1;
-                    play();
-                    break;
-                case "n":
-                    break;
-                default:
-                    System.out.println("You must enter 'y' or 'n'.");
-            }
+        System.out.println("Would you like to start another game ?");
+        switch (menu.yesOrNo()) {
+            case "y":
+                break;
+            case "n":
+                menu.resetMenu();
+                break;
         }
     }
 
     private void moveForward() throws CharacterOffBoardException {
         characterPosition += dice.getValue();
-        System.out.println(character.getName() + " is on the case number " + characterPosition);
         try {
-            System.out.println(boardGame.get(characterPosition - 1));
-        } catch (Exception e) {
-            throw new CharacterOffBoardException("You have won !");
+            System.out.println("You threw a " + dice.getValue()+"\n"+character.getName() + " is on the case number " + characterPosition+"\n"+boardGame.get(characterPosition - 1));
+        } catch (IndexOutOfBoundsException e) {
+            throw new CharacterOffBoardException("You went off the board.");
         }
     }
 
     private void playATurn() throws CharacterOffBoardException {
-        keyboard.nextLine();
+        menu.waitForPlayer();
         dice.throwDice();
-        System.out.println("You threw a " + dice.getValue());
+        System.out.println();
         moveForward();
     }
 }
