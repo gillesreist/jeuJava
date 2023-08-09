@@ -2,7 +2,7 @@ package fr.ecoleNum.dd.gameComponents.boardGame;
 
 public class Mace extends Weapon {
     public Mace() {
-        super("mace", 2);
+        super("mace", 3);
     }
     public Mace(String name, int attackLevel){
         super(name, attackLevel);

@@ -1,36 +1,30 @@
 package fr.ecoleNum.dd.gameComponents.boardGame;
 
-public class Spell extends Case {
-    private String name;
-    private int attackLevel;
+import fr.ecoleNum.dd.character.Character;
+import fr.ecoleNum.dd.character.Warrior;
+
+public class Spell extends AttackEquipment {
 
     public Spell() {
         this("spell",1);
     }
 
     public Spell(String name, int attackLevel) {
-        this.name = name;
-        this.attackLevel = attackLevel;
+        super(name, attackLevel);
     }
 
     @Override
     public String toString() {
-        return "You found a scroll with strange symobls on it.";
+        return "You found a scroll with strange symbols on it.";
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAttackLevel() {
-        return attackLevel;
-    }
-
-    public void setAttackLevel(int attackLevel) {
-        this.attackLevel = attackLevel;
+    @Override
+    public void interaction(Character character) {
+        if (character instanceof Warrior) {
+            System.out.println("If only you knew how to read...");
+        } else {
+            System.out.println("You learn a new spell, you can feel your power growing !");
+            equip(character);
+        }
     }
 }

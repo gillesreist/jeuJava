@@ -1,8 +1,11 @@
 package fr.ecoleNum.dd.gameComponents.boardGame;
 
+import fr.ecoleNum.dd.character.Character;
+import fr.ecoleNum.dd.character.Warrior;
+
 public class FireBolt extends Spell {
     public FireBolt() {
-        super("fireBolt", 2);
+        super("fireBolt", 5);
     }
     public FireBolt(String name, int attackLevel){
         super(name, attackLevel);

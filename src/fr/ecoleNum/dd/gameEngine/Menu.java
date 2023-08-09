@@ -169,6 +169,7 @@ public class Menu {
 
     public void changeCharacterHealth(Character character) {
         System.out.println("Type the new health of your character between "+character.getMinHealth()+" and "+character.getMaxHealth());
+        System.out.println("If you chose something other than "+character.getMinHealth()+" you are weak...");
         int userEntryInt = Utilities.toIntIfValid(keyboard.nextLine());
         if (userEntryInt <= character.getMaxHealth() && userEntryInt >= character.getMinHealth() ) {
             character.setLifeLevel(userEntryInt);
@@ -180,6 +181,7 @@ public class Menu {
 
     public void changeCharacterStrength(Character character) {
         System.out.println("Type the new strength of your character between "+character.getMinStrength()+" and "+character.getMaxStrength());
+        System.out.println("If you chose something other than "+character.getMinStrength()+" you are a cheater...");
         int userEntryInt = Utilities.toIntIfValid(keyboard.nextLine());
         if (userEntryInt <= character.getMaxStrength() && userEntryInt >= character.getMinStrength() ) {
             character.setAttackStrength(userEntryInt);

@@ -1,12 +1,12 @@
 package fr.ecoleNum.dd.gameEngine;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Scanner;
 import fr.ecoleNum.dd.character.Character;
+import fr.ecoleNum.dd.exceptions.CharacterDeadException;
 import fr.ecoleNum.dd.exceptions.CharacterOffBoardException;
 import fr.ecoleNum.dd.gameComponents.boardGame.*;
 import fr.ecoleNum.dd.gameComponents.dice.Dice;
-import fr.ecoleNum.dd.gameComponents.dice.FakeDice;
+import fr.ecoleNum.dd.gameComponents.dice.D6;
 
 public class Game {
     private Menu menu;
@@ -21,7 +21,7 @@ public class Game {
         menu = new Menu();
         boardGame = new ArrayList<>();
         character = null;
-        dice = new FakeDice();
+        dice = new D6();
         run = true;
         gameInProgress = false;
         createBoard();
@@ -32,18 +32,29 @@ public class Game {
     }
 
     private void createBoard() {
-        boardGame.add(new EmptyCase());
-        boardGame.add(new Foe());
-        boardGame.add(new Weapon());
-        boardGame.add(new Dragon());
-        boardGame.add(new Mace());
-        boardGame.add(new ThunderBolt());
-        boardGame.add(new ClassicPotion());
-        boardGame.add(new Goblin());
-        boardGame.add(new FireBolt());
-        boardGame.add(new Sword());
-        boardGame.add(new Wizard());
-        boardGame.add(new BigPotion());
+        for (int i=0; i <64; i++) {
+            if (i==45 || i==52 || i==56 || i== 62) {
+                boardGame.add(new Dragon());
+            } else if (i==10 || i==20 || i==25 || i== 32 || i==35 || i==36 || i== 37 || i==40 || i==44 || i== 47) {
+                boardGame.add(new Wizard());
+            } else if (i==3|| i==6 || i==9 || i==12 || i==15 || i==18 || i==21 || i==24 || i==27 || i==30) {
+                boardGame.add(new Goblin());
+            } else if (i==2|| i==5 || i==11 || i==22 || i==38) {
+                boardGame.add(new Mace());
+            } else if (i==19|| i==26 || i==42 || i==53) {
+                boardGame.add(new Sword());
+            } else if (i==1|| i==4 || i==8 || i==17 || i==23) {
+                boardGame.add(new ThunderBolt());
+            } else if (i==48|| i==49) {
+                boardGame.add(new FireBolt());
+            } else if (i==7|| i==13 || i==31 || i==33 || i==39 || i==43) {
+                boardGame.add(new ClassicPotion());
+            } else if (i==28|| i==41) {
+                boardGame.add(new BigPotion());
+            } else {
+                boardGame.add(new EmptyCase());
+            }
+        }
     }
 
     public void start() {
@@ -63,7 +74,7 @@ public class Game {
                             method.invoke(menu, character);
                     }
                 } catch (Exception e) {
-                    System.err.println(e.toString());
+                    System.err.println(e);
                     menu.resetMenu();
                 }
             }
@@ -82,11 +93,9 @@ public class Game {
             while (gameInProgress) {
                     playATurn();
             }
-        } catch(CharacterOffBoardException e) {
+        } catch(CharacterOffBoardException | CharacterDeadException e) {
             gameInProgress = false;
         }
-
-        System.out.println("Congratulations, you finished your adventure!");
 
         System.out.println("Would you like to start another game ?");
         switch (menu.yesOrNo()) {
@@ -98,17 +107,18 @@ public class Game {
         }
     }
 
-    private void moveForward() throws CharacterOffBoardException {
+    private void moveForward() throws CharacterOffBoardException, CharacterDeadException {
         characterPosition += dice.getValue();
         try {
-            boardGame.get(characterPosition-1).interaction(character);
             System.out.println("You threw a " + dice.getValue()+"\n"+character.getName() + " is on the case number " + characterPosition+"\n"+boardGame.get(characterPosition - 1));
+            boardGame.get(characterPosition-1).interaction(character);
         } catch (IndexOutOfBoundsException e) {
+            System.out.println("Congratulations, you finished your adventure!");
             throw new CharacterOffBoardException("You went off the board.");
         }
     }
 
-    private void playATurn() throws CharacterOffBoardException {
+    private void playATurn() throws CharacterOffBoardException, CharacterDeadException {
         menu.waitForPlayer();
         dice.throwDice();
         System.out.println();

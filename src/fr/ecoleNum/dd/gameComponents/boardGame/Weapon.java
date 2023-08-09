@@ -1,16 +1,15 @@
 package fr.ecoleNum.dd.gameComponents.boardGame;
+import fr.ecoleNum.dd.character.Character;
+import fr.ecoleNum.dd.character.Warrior;
 
-public class Weapon extends Case {
-    private String name;
-    private int attackLevel;
+public class Weapon extends AttackEquipment {
 
     public Weapon() {
         this("weapon",1);
     }
 
     public Weapon(String name, int attackLevel) {
-        this.name = name;
-        this.attackLevel = attackLevel;
+        super(name, attackLevel);
     }
 
     @Override
@@ -18,19 +17,14 @@ public class Weapon extends Case {
         return "A weapon just lying on the side of the road. Weird...";
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAttackLevel() {
-        return attackLevel;
-    }
-
-    public void setAttackLevel(int attackLevel) {
-        this.attackLevel = attackLevel;
+    @Override
+    public void interaction(Character character) {
+        if (character instanceof Warrior) {
+            System.out.println("You have some ideas on how to use this tool. And they are all bloody.");
+            equip(character);
+        } else {
+            System.out.println("You don't have the strength to even lift such a thing.");
+        }
     }
 }

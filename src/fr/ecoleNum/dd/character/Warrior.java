@@ -18,15 +18,12 @@ public class Warrior extends Character {
     }
 
     protected void setCharacterMinMax() {
-        this.setMinHealth(5);
-        this.setMaxHealth(10);
-        this.setMinStrength(5);
-        this.setMaxStrength(10);
-        this.setLifeLevel(ThreadLocalRandom.current().nextInt(this.getMinHealth(), this.getMaxHealth() + 1));
-        this.setAttackStrength(ThreadLocalRandom.current().nextInt(this.getMinStrength(), this.getMaxStrength()+ 1));
-    }
-
-
+        setMinHealth(5);
+        setMaxHealth(10);
+        setMinStrength(5);
+        setMaxStrength(10);
+        setLifeLevel(getMinHealth());
+        setAttackStrength(getMinStrength());}
 }
 
 

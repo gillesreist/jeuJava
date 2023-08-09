@@ -3,7 +3,7 @@ package fr.ecoleNum.dd.gameComponents.boardGame;
 public class Sword extends Weapon {
 
     public Sword() {
-        super("sword", 2);
+        super("sword", 5);
     }
     public Sword(String name, int attackLevel){
         super(name, attackLevel);

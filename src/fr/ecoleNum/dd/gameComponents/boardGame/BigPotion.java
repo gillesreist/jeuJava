@@ -2,11 +2,11 @@ package fr.ecoleNum.dd.gameComponents.boardGame;
 
 public class BigPotion extends Potion{
     public BigPotion() {
-        super("bigPotion");
+        super("bigPotion", 5);
     }
 
-    public BigPotion(String name){
-        super(name);
+    public BigPotion(String name, int healthRecovery){
+        super(name, healthRecovery);
     }
 
     @Override
