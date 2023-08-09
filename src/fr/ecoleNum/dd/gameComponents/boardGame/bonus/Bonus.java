@@ -1,7 +1,9 @@
-package fr.ecoleNum.dd.gameComponents.boardGame;
+package fr.ecoleNum.dd.gameComponents.boardGame.bonus;
+
+import fr.ecoleNum.dd.gameComponents.boardGame.Case;
 
 public class Bonus extends Case {
-    String name;
+    private String name;
 
     public Bonus() {
         this("Bonus");

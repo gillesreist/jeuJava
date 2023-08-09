@@ -1,4 +1,4 @@
-package fr.ecoleNum.dd.gameComponents.boardGame;
+package fr.ecoleNum.dd.gameComponents.boardGame.bonus.potions;
 
 public class ClassicPotion extends Potion{
     public ClassicPotion() {

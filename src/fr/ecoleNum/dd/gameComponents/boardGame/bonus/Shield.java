@@ -1,4 +1,6 @@
-package fr.ecoleNum.dd.gameComponents.boardGame;
+package fr.ecoleNum.dd.gameComponents.boardGame.bonus;
+
+import fr.ecoleNum.dd.gameComponents.boardGame.Case;
 
 public class Shield extends Case {
     String name;

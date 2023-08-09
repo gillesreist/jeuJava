@@ -1,9 +1,5 @@
 package fr.ecoleNum.dd.character;
 
-import fr.ecoleNum.dd.gameComponents.boardGame.Weapon;
-
-import java.util.concurrent.ThreadLocalRandom;
-
 public class Warrior extends Character {
         public Warrior() {
         super();

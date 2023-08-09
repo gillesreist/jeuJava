@@ -1,6 +1,7 @@
-package fr.ecoleNum.dd.gameComponents.boardGame;
+package fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment;
 
 import fr.ecoleNum.dd.character.Character;
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.Bonus;
 
 public class AttackEquipment extends Bonus {
     private int attackLevel;
@@ -10,7 +11,7 @@ public class AttackEquipment extends Bonus {
     }
 
     public AttackEquipment(String name, int attackLevel) {
-        this.name = name;
+        super(name);
         this.attackLevel = attackLevel;
     }
 

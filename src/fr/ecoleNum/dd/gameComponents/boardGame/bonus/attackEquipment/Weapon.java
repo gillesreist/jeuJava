@@ -1,4 +1,4 @@
-package fr.ecoleNum.dd.gameComponents.boardGame;
+package fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment;
 import fr.ecoleNum.dd.character.Character;
 import fr.ecoleNum.dd.character.Warrior;
 

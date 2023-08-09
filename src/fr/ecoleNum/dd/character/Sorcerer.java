@@ -1,9 +1,5 @@
 package fr.ecoleNum.dd.character;
 
-import fr.ecoleNum.dd.gameComponents.boardGame.Spell;
-
-import java.util.concurrent.ThreadLocalRandom;
-
 public class Sorcerer extends Character {
 
     public Sorcerer() {

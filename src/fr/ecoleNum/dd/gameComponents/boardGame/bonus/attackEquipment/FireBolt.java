@@ -1,7 +1,4 @@
-package fr.ecoleNum.dd.gameComponents.boardGame;
-
-import fr.ecoleNum.dd.character.Character;
-import fr.ecoleNum.dd.character.Warrior;
+package fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment;
 
 public class FireBolt extends Spell {
     public FireBolt() {

@@ -1,4 +1,4 @@
-package fr.ecoleNum.dd.gameComponents.boardGame;
+package fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment;
 
 public class ThunderBolt extends Spell{
     public ThunderBolt() {

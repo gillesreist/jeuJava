@@ -1,4 +1,4 @@
-package fr.ecoleNum.dd.gameComponents.boardGame;
+package fr.ecoleNum.dd.gameComponents.boardGame.foe;
 
 public class Dragon extends Foe {
     public Dragon(){

@@ -1,6 +1,7 @@
-package fr.ecoleNum.dd.gameComponents.boardGame;
+package fr.ecoleNum.dd.gameComponents.boardGame.bonus.potions;
 
 import fr.ecoleNum.dd.character.Character;
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.Bonus;
 
 public class Potion extends Bonus {
     int healthRecovery;
@@ -10,7 +11,7 @@ public class Potion extends Bonus {
     }
 
     public Potion(String name, int healthRecovery){
-        this.name = name;
+        super(name);
         this.healthRecovery = healthRecovery;
     }
 

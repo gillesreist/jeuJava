@@ -1,7 +1,8 @@
-package fr.ecoleNum.dd.gameComponents.boardGame;
+package fr.ecoleNum.dd.gameComponents.boardGame.foe;
 
 import fr.ecoleNum.dd.character.Character;
 import fr.ecoleNum.dd.exceptions.CharacterDeadException;
+import fr.ecoleNum.dd.gameComponents.boardGame.Case;
 
 public class Foe extends Case {
 

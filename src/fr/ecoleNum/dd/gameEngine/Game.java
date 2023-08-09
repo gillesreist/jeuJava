@@ -5,6 +5,15 @@ import fr.ecoleNum.dd.character.Character;
 import fr.ecoleNum.dd.exceptions.CharacterDeadException;
 import fr.ecoleNum.dd.exceptions.CharacterOffBoardException;
 import fr.ecoleNum.dd.gameComponents.boardGame.*;
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.FireBolt;
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.Mace;
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.Sword;
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.ThunderBolt;
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.potions.BigPotion;
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.potions.ClassicPotion;
+import fr.ecoleNum.dd.gameComponents.boardGame.foe.Dragon;
+import fr.ecoleNum.dd.gameComponents.boardGame.foe.Goblin;
+import fr.ecoleNum.dd.gameComponents.boardGame.foe.Wizard;
 import fr.ecoleNum.dd.gameComponents.dice.Dice;
 import fr.ecoleNum.dd.gameComponents.dice.D6;
 
