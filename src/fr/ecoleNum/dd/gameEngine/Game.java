@@ -109,6 +109,8 @@ public class Game {
         System.out.println("Would you like to start another game ?");
         switch (menu.yesOrNo()) {
             case "y":
+                character.setLifeLevel(character.getMinHealth());
+                character.setAttackStrength(character.getMinStrength());
                 break;
             case "n":
                 menu.resetMenu();
