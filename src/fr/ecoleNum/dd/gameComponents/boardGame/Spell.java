@@ -4,9 +4,18 @@ public class Spell extends Case {
     private String name;
     private int attackLevel;
 
-    Spell() {
-        name = "fireBolt";
-        attackLevel = 2;
+    public Spell() {
+        this("spell",1);
+    }
+
+    public Spell(String name, int attackLevel) {
+        this.name = name;
+        this.attackLevel = attackLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "You found a scroll with strange symobls on it.";
     }
 
     public String getName() {

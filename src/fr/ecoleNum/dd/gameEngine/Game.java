@@ -35,7 +35,15 @@ public class Game {
         boardGame.add(new EmptyCase());
         boardGame.add(new Foe());
         boardGame.add(new Weapon());
-        boardGame.add(new Potion());
+        boardGame.add(new Dragon());
+        boardGame.add(new Mace());
+        boardGame.add(new ThunderBolt());
+        boardGame.add(new ClassicPotion());
+        boardGame.add(new Goblin());
+        boardGame.add(new FireBolt());
+        boardGame.add(new Sword());
+        boardGame.add(new Wizard());
+        boardGame.add(new BigPotion());
     }
 
     public void start() {
@@ -69,7 +77,7 @@ public class Game {
     private void play() {
         gameInProgress = true;
         characterPosition = 0;
-        System.out.println(character.getName()+ " is on the case number " + characterPosition);
+        System.out.println(character.getName()+ " is starting his journey !");
         try {
             while (gameInProgress) {
                     playATurn();

@@ -5,13 +5,17 @@ public class Weapon extends Case {
     private int attackLevel;
 
     public Weapon() {
-        name = "sword";
-        attackLevel = 1;
+        this("weapon",1);
+    }
+
+    public Weapon(String name, int attackLevel) {
+        this.name = name;
+        this.attackLevel = attackLevel;
     }
 
     @Override
     public String toString() {
-        return "A sword is stuck into a rock.";
+        return "A weapon just lying on the side of the road. Weird...";
     }
 
     public String getName() {

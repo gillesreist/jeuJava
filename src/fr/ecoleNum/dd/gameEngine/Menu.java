@@ -48,7 +48,6 @@ public class Menu {
                 break;
             case "2":
                 if (character != null) {
-                    System.out.println(character.getName()+" is beginning his adventure !");
                     this.run = false;
                 }
                 break;

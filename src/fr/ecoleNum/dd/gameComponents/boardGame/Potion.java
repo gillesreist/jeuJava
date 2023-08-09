@@ -4,7 +4,11 @@ public class Potion extends Case {
     String name;
 
     public Potion() {
-        name = "Mana Potion";
+        this("Potion");
+    }
+
+    public Potion(String name){
+        this.name = name;
     }
 
     @Override
