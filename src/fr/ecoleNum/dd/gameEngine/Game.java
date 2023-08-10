@@ -67,6 +67,7 @@ public class Game {
             }
         }
         Collections.shuffle(boardGame);
+        boardGame.set(63, new Dragon());
     }
 
     public void start() {
@@ -106,7 +107,7 @@ public class Game {
             while (gameInProgress) {
                     playATurn();
             }
-        } catch(CharacterOffBoardException | CharacterDeadException e) {
+        } catch(CharacterDeadException e) {
             gameInProgress = false;
         }
 
@@ -121,15 +122,18 @@ public class Game {
         }
     }
 
-    private void moveForward() throws CharacterOffBoardException, CharacterDeadException {
-        characterPosition += dice.getValue();
-        try {
-            System.out.println("You threw a " + dice.getValue()+"\n"+character.getName() + " is on the case number " + characterPosition+"\n"+boardGame.get(characterPosition - 1));
-            boardGame.get(characterPosition-1).interaction(character);
+    private void moveForward() throws CharacterDeadException {
+        if (characterPosition!=boardGame.size()) {
+            characterPosition += dice.getValue();
+            if (characterPosition > boardGame.size()) {
+                characterPosition = boardGame.size();
+            }
+            System.out.println("You threw a " + dice.getValue() + "\n" + character.getName() + " is on the case number " + characterPosition + "\n" + boardGame.get(characterPosition - 1));
+            boardGame.get(characterPosition - 1).interaction(character);
             checkForDeadFoe();
-        } catch (IndexOutOfBoundsException e) {
+        } else {
             System.out.println("Congratulations, you finished your adventure!");
-            throw new CharacterOffBoardException("You went off the board.");
+            gameInProgress = false;
         }
     }
 
@@ -143,7 +147,7 @@ public class Game {
         }
     }
 
-    private void playATurn() throws CharacterOffBoardException, CharacterDeadException {
+    private void playATurn() throws CharacterDeadException {
         menu.waitForPlayer();
         dice.throwDice();
         moveForward();

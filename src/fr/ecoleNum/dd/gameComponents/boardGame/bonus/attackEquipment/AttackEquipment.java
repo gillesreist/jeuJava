@@ -30,14 +30,23 @@ public class AttackEquipment extends Bonus {
 
     protected void equip(Character character) {
         boolean equip = false;
-        if (character.getInventorySize() < 2) {
-            System.out.println("It has an attack level of "+this.getAttackLevel());
-            System.out.println("Do you want to pick it up ? y/n");
-            equip = interactionMenu.yesOrNo();
-        }
+        System.out.println("It has an attack level of " + this.getAttackLevel());
+        System.out.println("Do you want to pick it up ? y/n");
+        equip = interactionMenu.yesOrNo();
+
         if (equip) {
-            character.addToInventory(this);
-            System.out.println("You put it in your backpack.");
+            if (character.getInventorySize() < 2) {
+                character.addToInventory(this);
+                System.out.println("You put it in your backpack.");
+            } else {
+                interactionMenu.removeFromInventory(character.getInventory());
+                if (character.getInventorySize() < 2) {
+                    character.addToInventory(this);
+                    System.out.println("You put it in your backpack.");
+                } else {
+                    System.out.println("It is not worth it.");
+                }
+            }
         } else {
             System.out.println("It is not worth it.");
         }
