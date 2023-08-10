@@ -29,10 +29,17 @@ public class AttackEquipment extends Bonus {
     }
 
     protected void equip(Character character) {
-        character.setAttackStrength(character.getAttackStrength()+getAttackLevel());
-        if (character.getAttackStrength()> character.getMaxStrength()) {
-            character.setAttackStrength(character.getMaxStrength());
+        boolean equip = false;
+        if (character.getInventorySize() < 2) {
+            System.out.println("It has an attack level of "+this.getAttackLevel());
+            System.out.println("Do you want to pick it up ? y/n");
+            equip = interactionMenu.yesOrNo();
         }
-        System.out.println("Your attack strength is now "+character.getAttackStrength());
+        if (equip) {
+            character.addToInventory(this);
+            System.out.println("You put it in your backpack.");
+        } else {
+            System.out.println("It is not worth it.");
+        }
     }
 }

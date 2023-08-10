@@ -23,7 +23,7 @@ public class Spell extends AttackEquipment {
         if (character instanceof Warrior) {
             System.out.println("If only you knew how to read...");
         } else {
-            System.out.println("You learn a new spell, you can feel your power growing !");
+            System.out.println("You could learn something here...");
             equip(character);
         }
     }

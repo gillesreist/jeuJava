@@ -10,6 +10,7 @@ public class Bonus extends Case {
     }
 
     public Bonus(String name) {
+        super();
         this.name = name;
     }
 

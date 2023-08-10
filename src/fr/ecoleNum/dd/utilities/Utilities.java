@@ -7,10 +7,10 @@ public class Utilities {
             try {
                 result = Integer.parseInt(numbers);
             } catch (NumberFormatException nfe) {
-                result = 0;
+                result = -1;
             }
         }else {
-                result = 0;
+                result = -1;
         }
         return result;
     }

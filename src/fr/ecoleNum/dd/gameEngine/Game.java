@@ -1,6 +1,8 @@
 package fr.ecoleNum.dd.gameEngine;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import fr.ecoleNum.dd.character.Character;
 import fr.ecoleNum.dd.exceptions.CharacterDeadException;
 import fr.ecoleNum.dd.exceptions.CharacterOffBoardException;
@@ -11,6 +13,7 @@ import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.Sword;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.ThunderBolt;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.potions.BigPotion;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.potions.ClassicPotion;
+import fr.ecoleNum.dd.gameComponents.boardGame.foe.Foe;
 import fr.ecoleNum.dd.gameComponents.boardGame.foe.Dragon;
 import fr.ecoleNum.dd.gameComponents.boardGame.foe.Goblin;
 import fr.ecoleNum.dd.gameComponents.boardGame.foe.Wizard;
@@ -33,7 +36,6 @@ public class Game {
         dice = new D6();
         run = true;
         gameInProgress = false;
-        createBoard();
     }
 
     public boolean isRunning() {
@@ -64,6 +66,7 @@ public class Game {
                 boardGame.add(new EmptyCase());
             }
         }
+        Collections.shuffle(boardGame);
     }
 
     public void start() {
@@ -88,6 +91,7 @@ public class Game {
                 }
             }
             if (run) {
+                setGame();
                 play();
             }
         }
@@ -109,8 +113,7 @@ public class Game {
         System.out.println("Would you like to start another game ?");
         switch (menu.yesOrNo()) {
             case "y":
-                character.setLifeLevel(character.getMinHealth());
-                character.setAttackStrength(character.getMinStrength());
+                setGame();
                 break;
             case "n":
                 menu.resetMenu();
@@ -123,16 +126,34 @@ public class Game {
         try {
             System.out.println("You threw a " + dice.getValue()+"\n"+character.getName() + " is on the case number " + characterPosition+"\n"+boardGame.get(characterPosition - 1));
             boardGame.get(characterPosition-1).interaction(character);
+            checkForDeadFoe();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Congratulations, you finished your adventure!");
             throw new CharacterOffBoardException("You went off the board.");
         }
     }
 
+    private void checkForDeadFoe() {
+        int caseNumber = characterPosition-1;
+        Case foe = boardGame.get(caseNumber);
+        if ( foe instanceof Foe) {
+            if (((Foe) foe).getLifeLevel() <= 0) {
+                boardGame.set(caseNumber, new DeadFoe());
+            }
+        }
+    }
+
     private void playATurn() throws CharacterOffBoardException, CharacterDeadException {
         menu.waitForPlayer();
         dice.throwDice();
-        System.out.println();
         moveForward();
+    }
+
+    private void setGame() {
+        character.setLifeLevel(character.getMinHealth());
+        character.setAttackStrength(character.getMinStrength());
+        boardGame.clear();
+        character.clearInventory();
+        createBoard();
     }
 }

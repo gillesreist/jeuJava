@@ -1,5 +1,10 @@
 package fr.ecoleNum.dd.character;
 
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.AttackEquipment;
+import fr.ecoleNum.dd.gameComponents.boardGame.foe.Foe;
+
+import java.util.ArrayList;
+
 public abstract class Character {
     private String name;
     private int lifeLevel;
@@ -8,9 +13,11 @@ public abstract class Character {
     private int maxHealth;
     private int minStrength;
     private int maxStrength;
+    private ArrayList<AttackEquipment> inventory;
 
     public Character() {
         this.name = "Cannon Fodder";
+        this.inventory = new ArrayList<>();
         setCharacterMinMax();
     }
 
@@ -87,4 +94,35 @@ public abstract class Character {
     }
 
     protected abstract void setCharacterMinMax();
+
+    public ArrayList<AttackEquipment> getInventory() {
+        return inventory;
+    }
+
+    public void addToInventory(AttackEquipment attackEquipment) {
+        inventory.add(attackEquipment);
+    }
+
+    public int getInventorySize() {
+        return inventory.size();
+    }
+
+    public void clearInventory() {
+        inventory.clear();
+    }
+
+    public void attack(Foe foe){
+        int equipmentAttackLevel = foe.chooseAttackEquipment(this);
+        int totalAttackStrength = getAttackStrength()+equipmentAttackLevel;
+        foe.setLifeLevel(foe.getLifeLevel()- totalAttackStrength);
+        System.out.println("You attacked him first and removed him "+totalAttackStrength+" life points.");
+    }
+
+
+
+    public void defend(Foe foe) {
+        System.out.println("He strikes you back and inflicts you "+foe.getAttackStrength()+" damages.");
+        setLifeLevel(getLifeLevel()-foe.getAttackStrength());
+    }
+
 }
