@@ -3,12 +3,12 @@ package fr.ecoleNum.dd.gameComponents.boardGame.foe;
 import fr.ecoleNum.dd.character.Character;
 import fr.ecoleNum.dd.exceptions.CharacterDeadException;
 import fr.ecoleNum.dd.gameComponents.boardGame.Case;
-import fr.ecoleNum.dd.utilities.Utilities;
 
 public class Foe extends Case {
 
     private int lifeLevel;
     private int attackStrength;
+    private boolean fightInProgress;
 
     public Foe() {
         this(1,1);
@@ -32,24 +32,38 @@ public class Foe extends Case {
 
     protected void fight(Character character) throws CharacterDeadException {
         System.out.println("You cannot avoid the fight.");
-        character.attack(this);
-        if (getLifeLevel()<=0) {
-            System.out.println("You killed him.");
-        } else {
-            System.out.println("He got "+getLifeLevel()+" life points left.");
-            character.defend(this);
-            if (character.getLifeLevel() <= 0) {
-                System.out.println("I'm very sorry to inform you that you are now dead.");
-                throw new CharacterDeadException("Character is dead");
+        fightInProgress = true;
+        while (fightInProgress) {
+            character.attack(this);
+            if (getLifeLevel() <= 0) {
+                System.out.println("You killed him.");
+                fightInProgress = false;
             } else {
-                System.out.println("You have "+character.getLifeLevel()+" life points left.");
-                System.out.println("Your opponent is now fleeing.");
+                System.out.println("He got " + getLifeLevel() + " life points left.");
+                character.defend(this);
+                if (character.getLifeLevel() <= 0) {
+                    System.out.println("I'm very sorry to inform you that you are now dead.");
+                    throw new CharacterDeadException("Character is dead");
+                } else {
+                    System.out.println("You have " + character.getLifeLevel() + " life points left.");
+                    if (!(this instanceof GiantCockroach)) {
+                        System.out.println("Do you want to flee ?");
+                        if (interactionMenu.yesOrNo()) {
+                            fightInProgress = false;
+                            character.setHasFleed(true);
+                        } else {
+                            System.out.println("You valiantly continue your fight.");
+                        }
+                    } else {
+                        System.out.println("You cannot flee.");
+                    }
+                }
             }
         }
     }
 
     public int chooseAttackEquipment(Character character) {
-        return interactionMenu.getAttackLevelFromInventory(character.getInventory());
+        return interactionMenu.getAttackLevelFromInventory(character.getAttackInventory());
     }
 
     public int getLifeLevel() {

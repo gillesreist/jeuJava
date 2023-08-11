@@ -1,5 +1,6 @@
 package fr.ecoleNum.dd.character;
 
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.Bonus;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.AttackEquipment;
 import fr.ecoleNum.dd.gameComponents.boardGame.foe.Foe;
 
@@ -13,11 +14,15 @@ public abstract class Character {
     private int maxHealth;
     private int minStrength;
     private int maxStrength;
-    private ArrayList<AttackEquipment> inventory;
+    private ArrayList<AttackEquipment> attackInventory;
+    private ArrayList<Bonus> satchel;
+
+    private boolean hasFleed;
 
     public Character() {
         this.name = "Cannon Fodder";
-        this.inventory = new ArrayList<>();
+        this.attackInventory = new ArrayList<>();
+        this.satchel = new ArrayList<>();
         setCharacterMinMax();
     }
 
@@ -95,27 +100,43 @@ public abstract class Character {
 
     protected abstract void setCharacterMinMax();
 
-    public ArrayList<AttackEquipment> getInventory() {
-        return inventory;
+    public boolean hasFleed() {
+        return hasFleed;
     }
 
-    public void addToInventory(AttackEquipment attackEquipment) {
-        inventory.add(attackEquipment);
+    public void setHasFleed(boolean hasFleed) {
+        this.hasFleed = hasFleed;
     }
 
-    public int getInventorySize() {
-        return inventory.size();
+    public ArrayList<AttackEquipment> getAttackInventory() {
+        return attackInventory;
     }
 
-    public void clearInventory() {
-        inventory.clear();
+    public void addToAttackInventory(AttackEquipment attackEquipment) {
+        attackInventory.add(attackEquipment);
+    }
+
+    public int getAttackInventorySize() {
+        return attackInventory.size();
+    }
+
+    public void clearAttackInventory() {
+        attackInventory.clear();
+    }
+
+    public ArrayList<Bonus> getSatchel() {
+        return satchel;
+    }
+
+    public void addToSatchel(Bonus bonus) {
+        satchel.add(bonus);
     }
 
     public void attack(Foe foe){
         int equipmentAttackLevel = foe.chooseAttackEquipment(this);
         int totalAttackStrength = getAttackStrength()+equipmentAttackLevel;
         foe.setLifeLevel(foe.getLifeLevel()- totalAttackStrength);
-        System.out.println("You attacked him first and removed him "+totalAttackStrength+" life points.");
+        System.out.println("You attacked him and removed him "+totalAttackStrength+" life points.");
     }
 
 

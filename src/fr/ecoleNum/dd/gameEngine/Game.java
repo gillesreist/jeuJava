@@ -5,18 +5,15 @@ import java.util.Collections;
 
 import fr.ecoleNum.dd.character.Character;
 import fr.ecoleNum.dd.exceptions.CharacterDeadException;
-import fr.ecoleNum.dd.exceptions.CharacterOffBoardException;
 import fr.ecoleNum.dd.gameComponents.boardGame.*;
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.Bonus;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.FireBolt;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.Mace;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.Sword;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.ThunderBolt;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.potions.BigPotion;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.potions.ClassicPotion;
-import fr.ecoleNum.dd.gameComponents.boardGame.foe.Foe;
-import fr.ecoleNum.dd.gameComponents.boardGame.foe.Dragon;
-import fr.ecoleNum.dd.gameComponents.boardGame.foe.Goblin;
-import fr.ecoleNum.dd.gameComponents.boardGame.foe.Wizard;
+import fr.ecoleNum.dd.gameComponents.boardGame.foe.*;
 import fr.ecoleNum.dd.gameComponents.dice.Dice;
 import fr.ecoleNum.dd.gameComponents.dice.D6;
 
@@ -25,15 +22,16 @@ public class Game {
     private Character character;
     private int characterPosition;
     private Dice dice;
+    private Dice fleeingDice;
     private ArrayList<Case> boardGame;
     private boolean run;
     private boolean gameInProgress;
-
     public Game() {
         menu = new Menu();
         boardGame = new ArrayList<>();
         character = null;
         dice = new D6();
+        fleeingDice = new D6();
         run = true;
         gameInProgress = false;
     }
@@ -67,7 +65,7 @@ public class Game {
             }
         }
         Collections.shuffle(boardGame);
-        boardGame.set(63, new Dragon());
+        boardGame.set(63, new GiantCockroach());
     }
 
     public void start() {
@@ -122,6 +120,12 @@ public class Game {
         }
     }
 
+    private void playATurn() throws CharacterDeadException {
+        menu.waitForPlayer();
+        dice.throwDice();
+        moveForward();
+    }
+
     private void moveForward() throws CharacterDeadException {
         if (characterPosition!=boardGame.size()) {
             characterPosition += dice.getValue();
@@ -131,9 +135,27 @@ public class Game {
             System.out.println("You threw a " + dice.getValue() + "\n" + character.getName() + " is on the case number " + characterPosition + "\n" + boardGame.get(characterPosition - 1));
             boardGame.get(characterPosition - 1).interaction(character);
             checkForDeadFoe();
+            checkIfPickedUp();
+            if (character.hasFleed()) {
+                fleeing(character);
+            }
         } else {
             System.out.println("Congratulations, you finished your adventure!");
             gameInProgress = false;
+        }
+    }
+
+    private void fleeing(Character character) throws CharacterDeadException {
+        while (character.hasFleed()) {
+            fleeingDice.throwDice();
+            characterPosition -= fleeingDice.getValue();
+            if (characterPosition < 1) {
+                characterPosition = 1;
+            }
+            System.out.println("You cowardly went to case "+ characterPosition + "\n" + boardGame.get(characterPosition - 1));
+            character.setHasFleed(false);
+            boardGame.get(characterPosition - 1).interaction(character);
+            checkForDeadFoe();
         }
     }
 
@@ -146,18 +168,21 @@ public class Game {
             }
         }
     }
-
-    private void playATurn() throws CharacterDeadException {
-        menu.waitForPlayer();
-        dice.throwDice();
-        moveForward();
+    private  void checkIfPickedUp() {
+        int caseNumber = characterPosition-1;
+        Case bonus = boardGame.get(caseNumber);
+        if ( bonus instanceof Bonus) {
+            if (((Bonus) bonus).isInInventory()) {
+                boardGame.set(caseNumber, new EmptyCase());
+            }
+        }
     }
 
     private void setGame() {
         character.setLifeLevel(character.getMinHealth());
         character.setAttackStrength(character.getMinStrength());
         boardGame.clear();
-        character.clearInventory();
+        character.clearAttackInventory();
         createBoard();
     }
 }

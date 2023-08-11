@@ -17,7 +17,16 @@ public class Potion extends Bonus {
 
     @Override
     public void interaction(Character character) {
-        if (character.getLifeLevel() < character.getMaxHealth()) {
+        System.out.println("Do you want to pick it up ?");
+        if (interactionMenu.yesOrNo()) {
+            character.addToSatchel(this);
+            this.inInventory = true;
+            System.out.println("You put it in your satchel.");
+        } else {
+            System.out.println("It is not worth it.");
+        }
+
+        /*if (character.getLifeLevel() < character.getMaxHealth()) {
             System.out.println("You drink it and gain some energy.");
             character.setLifeLevel(character.getLifeLevel()+healthRecovery);
 
@@ -29,7 +38,7 @@ public class Potion extends Bonus {
 
         } else {
             System.out.println("You're feeling great, you don't need to drink this.");
-        }
+        }*/
     }
 
     @Override
