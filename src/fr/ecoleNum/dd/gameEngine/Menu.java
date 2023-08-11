@@ -3,9 +3,12 @@ package fr.ecoleNum.dd.gameEngine;
 import fr.ecoleNum.dd.character.Character;
 import fr.ecoleNum.dd.character.Sorcerer;
 import fr.ecoleNum.dd.character.Warrior;
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.Bonus;
+import fr.ecoleNum.dd.gameComponents.boardGame.bonus.potions.Potion;
 import fr.ecoleNum.dd.utilities.Utilities;
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Menu {
     private boolean run;
@@ -202,6 +205,73 @@ public class Menu {
             key = keyboard.nextLine();
         }
         return key;
+    }
+
+    public int nextAction() {
+        int choice = -1;
+        System.out.println("What do you want to do next ?");
+        System.out.println("1 - Throw the dice");
+        System.out.println("2 - See your informations");
+        System.out.println("3 - Use an item.");
+        choice = Utilities.toIntIfValid(keyboard.nextLine());
+        while (choice != 1 && choice != 2 && choice != 3) {
+            System.out.println("You must enter a valid choice.");
+            choice = Utilities.toIntIfValid(keyboard.nextLine());
+        }
+        return choice;
+    }
+
+    public void useItem(Character character) {
+        ArrayList<Bonus> satchel = character.getSatchel();
+        if (!satchel.isEmpty()){
+            System.out.println("Which one do you want to use ?");
+            System.out.println("0 - none");
+            showInventory(satchel);
+            int userChoice = chooseFromInventory(satchel);
+            if (userChoice != 0) {
+                Bonus bonus = satchel.get(userChoice-1);
+                if (bonus instanceof Potion) {
+                    if (character.getLifeLevel() < character.getMaxHealth()) {
+                        System.out.println("You drink it and gain some energy.");
+                        character.setLifeLevel(character.getLifeLevel() + ((Potion) bonus).getHealthRecovery());
+
+                        if (character.getLifeLevel() > character.getMaxHealth()) {
+                            character.setLifeLevel(character.getMaxHealth());
+                            System.out.println("You got your energy to the max!");
+                        }
+                        System.out.println("Your life level is now " + character.getLifeLevel());
+                        satchel.remove(userChoice-1);
+
+                    } else {
+                        System.out.println("You're feeling great, you don't need to drink this.");
+                    }
+                } else {
+                    System.out.println("You don't know how to use that.");
+                }
+            }
+        } else {
+            System.out.println("Your satchel is empty.");
+        }
+    }
+
+    public void showInventory(ArrayList<Bonus> inventory) {
+        for (int i= 0; i < inventory.size(); i++) {
+            System.out.println((i+1)+" - "+inventory.get(i).getName());
+        }
+    }
+
+    public int chooseFromInventory(ArrayList<Bonus> inventory) {
+        String userEntry;
+        int userChoice = -1;
+        while(userChoice < 0 || userChoice > inventory.size()) {
+            userEntry  = userEntry();
+            userChoice = Utilities.toIntIfValid(userEntry);
+        }
+        return userChoice;
+    }
+
+    public String userEntry(){
+        return keyboard.nextLine();
     }
 
 }

@@ -46,4 +46,7 @@ public class Potion extends Bonus {
         return "You see a potion in the grass";
     }
 
+    public int getHealthRecovery() {
+        return healthRecovery;
+    }
 }

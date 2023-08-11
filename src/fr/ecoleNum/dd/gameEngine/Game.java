@@ -121,27 +121,33 @@ public class Game {
     }
 
     private void playATurn() throws CharacterDeadException {
-        menu.waitForPlayer();
-        dice.throwDice();
-        moveForward();
-    }
-
-    private void moveForward() throws CharacterDeadException {
         if (characterPosition!=boardGame.size()) {
-            characterPosition += dice.getValue();
-            if (characterPosition > boardGame.size()) {
-                characterPosition = boardGame.size();
-            }
-            System.out.println("You threw a " + dice.getValue() + "\n" + character.getName() + " is on the case number " + characterPosition + "\n" + boardGame.get(characterPosition - 1));
-            boardGame.get(characterPosition - 1).interaction(character);
-            checkForDeadFoe();
-            checkIfPickedUp();
-            if (character.hasFleed()) {
-                fleeing(character);
+            int choice = menu.nextAction();
+            if (choice == 1) {
+                dice.throwDice();
+                moveForward();
+            } else if (choice == 2) {
+                menu.informations(character);
+            } else {
+                menu.useItem(character);
             }
         } else {
             System.out.println("Congratulations, you finished your adventure!");
             gameInProgress = false;
+        }
+    }
+
+    private void moveForward() throws CharacterDeadException {
+        characterPosition += dice.getValue();
+        if (characterPosition > boardGame.size()) {
+            characterPosition = boardGame.size();
+        }
+        System.out.println("You threw a " + dice.getValue() + "\n" + character.getName() + " is on the case number " + characterPosition + "\n" + boardGame.get(characterPosition - 1));
+        boardGame.get(characterPosition - 1).interaction(character);
+        checkForDeadFoe();
+        checkIfPickedUp();
+        if (character.hasFleed()) {
+            fleeing(character);
         }
     }
 
@@ -183,6 +189,7 @@ public class Game {
         character.setAttackStrength(character.getMinStrength());
         boardGame.clear();
         character.clearAttackInventory();
+        character.clearSatchel();
         createBoard();
     }
 }

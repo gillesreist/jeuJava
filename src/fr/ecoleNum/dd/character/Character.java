@@ -3,6 +3,7 @@ package fr.ecoleNum.dd.character;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.Bonus;
 import fr.ecoleNum.dd.gameComponents.boardGame.bonus.attackEquipment.AttackEquipment;
 import fr.ecoleNum.dd.gameComponents.boardGame.foe.Foe;
+import fr.ecoleNum.dd.utilities.Utilities;
 
 import java.util.ArrayList;
 
@@ -122,6 +123,10 @@ public abstract class Character {
 
     public void clearAttackInventory() {
         attackInventory.clear();
+    }
+
+    public void clearSatchel() {
+        satchel.clear();
     }
 
     public ArrayList<Bonus> getSatchel() {
