@@ -1,5 +1,6 @@
 package fr.ecoleNum.dd.gameEngine;
 
+import fr.ecoleNum.dd.DB.Hero;
 import fr.ecoleNum.dd.character.Character;
 import fr.ecoleNum.dd.character.Sorcerer;
 import fr.ecoleNum.dd.character.Warrior;
@@ -9,7 +10,11 @@ import fr.ecoleNum.dd.utilities.Utilities;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import static fr.ecoleNum.dd.utilities.Utilities.toIntIfValid;
+
 public class Menu {
     private boolean run;
     private String menuState;
@@ -37,6 +42,7 @@ public class Menu {
 
         System.out.println("What would you like to do ?");
         if (character == null) {
+            System.out.println("0 - Select an existing character");
             System.out.println("1 - Create a character");
         } else {
             System.out.println("1 - Go back to your character");
@@ -46,6 +52,9 @@ public class Menu {
 
         switch (keyboard.nextLine()) {
 
+            case "0":
+                menuState = "characterSelection";
+                break;
             case "1":
                 menuState = "characterCreation";
                 break;
@@ -59,6 +68,33 @@ public class Menu {
                 return false;
         }
         return true;
+    }
+
+    public Character characterSelection(Character character) {
+        System.out.println("Choose one of the following characters");
+        System.out.println("0 - none");
+        Hero hero = new Hero();
+        ArrayList<Character> characterList = hero.getCharacters();
+        for (int i=0; i<characterList.size(); i++) {
+            Character currentCharacter = characterList.get(i);
+            System.out.print((i+1)+" - ");
+            System.out.println(currentCharacter);
+            String className = currentCharacter.getClass().getName();
+            String simpleClassName = className.substring(className.lastIndexOf('.') + 1);
+            System.out.println(currentCharacter.getName()+" is a "+simpleClassName);
+        }
+        int choice = toIntIfValid(keyboard.nextLine());
+        switch (choice) {
+            case 0 :
+                menuState = "startMenu";
+                return null;
+            default :
+                if (choice >= 1 && choice <= characterList.size()) {
+                    menuState = "startMenu";
+                    return characterList.get(choice-1);
+                }
+                return null;
+        }
     }
 
     public void characterCreation(Character character) {
@@ -173,7 +209,7 @@ public class Menu {
     public void changeCharacterHealth(Character character) {
         System.out.println("Type the new health of your character between "+character.getMinHealth()+" and "+character.getMaxHealth());
         System.out.println("If you chose something other than "+character.getMinHealth()+" you are weak...");
-        int userEntryInt = Utilities.toIntIfValid(keyboard.nextLine());
+        int userEntryInt = toIntIfValid(keyboard.nextLine());
         if (userEntryInt <= character.getMaxHealth() && userEntryInt >= character.getMinHealth() ) {
             character.setLifeLevel(userEntryInt);
             System.out.println("Your characters health is now "+ character.getLifeLevel());
@@ -185,7 +221,7 @@ public class Menu {
     public void changeCharacterStrength(Character character) {
         System.out.println("Type the new strength of your character between "+character.getMinStrength()+" and "+character.getMaxStrength());
         System.out.println("If you chose something other than "+character.getMinStrength()+" you are a cheater...");
-        int userEntryInt = Utilities.toIntIfValid(keyboard.nextLine());
+        int userEntryInt = toIntIfValid(keyboard.nextLine());
         if (userEntryInt <= character.getMaxStrength() && userEntryInt >= character.getMinStrength() ) {
             character.setAttackStrength(userEntryInt);
             System.out.println("Your characters strength is now " + character.getAttackStrength());
@@ -213,10 +249,10 @@ public class Menu {
         System.out.println("1 - Throw the dice");
         System.out.println("2 - See your informations");
         System.out.println("3 - Use an item.");
-        choice = Utilities.toIntIfValid(keyboard.nextLine());
+        choice = toIntIfValid(keyboard.nextLine());
         while (choice != 1 && choice != 2 && choice != 3) {
             System.out.println("You must enter a valid choice.");
-            choice = Utilities.toIntIfValid(keyboard.nextLine());
+            choice = toIntIfValid(keyboard.nextLine());
         }
         return choice;
     }
@@ -265,7 +301,7 @@ public class Menu {
         int userChoice = -1;
         while(userChoice < 0 || userChoice > inventory.size()) {
             userEntry  = userEntry();
-            userChoice = Utilities.toIntIfValid(userEntry);
+            userChoice = toIntIfValid(userEntry);
         }
         return userChoice;
     }

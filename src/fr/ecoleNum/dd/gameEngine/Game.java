@@ -77,6 +77,9 @@ public class Game {
                         case "startMenu" :
                             run = menu.startMenu(character);
                             break;
+                        case "characterSelection" :
+                            character = menu.characterSelection(character);
+                            break;
                         case "createCharacter" :
                             character = menu.createCharacter(character);
                             break;
@@ -112,7 +115,6 @@ public class Game {
         System.out.println("Would you like to start another game ?");
         switch (menu.yesOrNo()) {
             case "y":
-                setGame();
                 break;
             case "n":
                 menu.resetMenu();
