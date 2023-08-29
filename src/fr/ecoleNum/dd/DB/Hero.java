@@ -1,5 +1,6 @@
 package fr.ecoleNum.dd.DB;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import fr.ecoleNum.dd.character.Warrior;
 public class Hero {
     private Connection connection;
 
-    public ArrayList<Character> getCharacters() {
+    public ArrayList<Character> getHeroes() {
         ArrayList<Character> characters = new ArrayList<>();
         Statement statement = null;
         ResultSet result = null;
@@ -35,17 +36,36 @@ public class Hero {
                 String name = result.getString("NAME");
                 int lifeLevel = result.getInt("LIFELEVEL");
                 int attackStrength = result.getInt("ATTACKSTRENGTH");
-                Character character;
-                if (characterClass.equals("warrior")) {
+
+                try
+                {
+                  Class characterType = Class.forName("fr.ecoleNum.dd.character."+characterClass);
+
+                  Character character = (Character) characterType.getDeclaredConstructor().newInstance();
+
+
+                    character.setName(name);
+                    character.setLifeLevel(lifeLevel);
+                    character.setAttackStrength(attackStrength);
+
+                    characters.add(character);
+                }
+                catch (ClassNotFoundException e)
+                {
+                    // La classe n'existe pas
+                }
+                catch (NoSuchMethodException e)
+                {
+                    // Methode non trouvée
+                } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+
+               /* if (characterClass.equals("warrior")) {
                     character = new Warrior();
                 } else {
                     character = new Sorcerer();
-                }
-                character.setName(name);
-                character.setLifeLevel(lifeLevel);
-                character.setAttackStrength(attackStrength);
-
-                characters.add(character);
+                }*/
             }
         } catch (SQLException e) {
         } finally {

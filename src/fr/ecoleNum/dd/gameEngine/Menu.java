@@ -74,7 +74,7 @@ public class Menu {
         System.out.println("Choose one of the following characters");
         System.out.println("0 - none");
         Hero hero = new Hero();
-        ArrayList<Character> characterList = hero.getCharacters();
+        ArrayList<Character> characterList = hero.getHeroes();
         for (int i=0; i<characterList.size(); i++) {
             Character currentCharacter = characterList.get(i);
             System.out.print((i+1)+" - ");
