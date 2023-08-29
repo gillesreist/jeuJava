@@ -1,4 +1,4 @@
-package fr.ecoleNum.dd.gameEngine;
+import fr.ecoleNum.dd.gameEngine.Game;
 
 public class Main {
     public static void main(String[] args) {

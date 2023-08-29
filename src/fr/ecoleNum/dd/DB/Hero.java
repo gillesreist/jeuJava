@@ -1,5 +1,7 @@
 package fr.ecoleNum.dd.DB;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,20 +11,20 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import fr.ecoleNum.dd.character.Character;
 import fr.ecoleNum.dd.character.Sorcerer;
 import fr.ecoleNum.dd.character.Warrior;
 
 public class Hero {
-    private Connection connection;
 
     public ArrayList<Character> getHeroes() {
         ArrayList<Character> characters = new ArrayList<>();
         Statement statement = null;
         ResultSet result = null;
 
-        loadDatabase();
+        Connection connection = DBConnection.getInstance();
 
         try {
             statement = connection.createStatement();
@@ -60,12 +62,6 @@ public class Hero {
                 } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }
-
-               /* if (characterClass.equals("warrior")) {
-                    character = new Warrior();
-                } else {
-                    character = new Sorcerer();
-                }*/
             }
         } catch (SQLException e) {
         } finally {
@@ -84,17 +80,5 @@ public class Hero {
         return characters;
     }
 
-    private void loadDatabase() {
-        // Chargement du driver
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-        }
 
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dungeongame", "adventurer", "adventurerpw");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
