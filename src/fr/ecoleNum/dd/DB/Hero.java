@@ -19,7 +19,11 @@ import fr.ecoleNum.dd.character.Warrior;
 
 public class Hero {
 
-    public ArrayList<Character> getHeroes() {
+    /**
+     *
+     * @return
+     */
+    public List<Character> getHeroes() {
         ArrayList<Character> characters = new ArrayList<>();
         Statement statement = null;
         ResultSet result = null;

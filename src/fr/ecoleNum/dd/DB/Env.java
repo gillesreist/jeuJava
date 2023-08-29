@@ -6,13 +6,9 @@ import java.util.Properties;
 
 public class Env {
 
-    static Properties env;
+    private static Properties env;
 
     private Env() {
-        loadEnv();
-    }
-
-    private void loadEnv() {
         try {
             env = new Properties();
             env.load(new FileInputStream(".env"));

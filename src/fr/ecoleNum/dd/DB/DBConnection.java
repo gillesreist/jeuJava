@@ -7,13 +7,9 @@ import java.util.Properties;
 
 public class DBConnection {
 
-    static Connection connection;
+    private static Connection connection;
 
     private DBConnection() {
-        loadDatabase();
-    }
-
-    private void loadDatabase() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
