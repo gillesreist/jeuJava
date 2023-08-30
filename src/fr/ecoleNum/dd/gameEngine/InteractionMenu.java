@@ -7,6 +7,9 @@ import fr.ecoleNum.dd.utilities.Utilities;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Cette classe permet au joueur de faire des choix lors d'une intéraction avec une case */
+
 public class InteractionMenu {
 
     Scanner keyboard;
@@ -28,6 +31,11 @@ public class InteractionMenu {
         return keyboard.nextLine();
     }
 
+    /**
+     * Cette méthode permet de récupérer la force d'une arme de l'inventaire.
+     * @param inventory inventaire du personnage
+     * @return force de l'arme sélectionnée ou 0.
+     */
     public int getAttackLevelFromInventory(ArrayList<AttackEquipment> inventory) {
         if (!inventory.isEmpty()){
             if (inventory.size() == 1) {
@@ -49,6 +57,10 @@ public class InteractionMenu {
         return 0;
     }
 
+    /**
+     * Cette méthode permet d'enlever un objet de l'inventaire.
+     * @param inventory
+     */
     public void removeFromInventory(ArrayList<AttackEquipment> inventory) {
         System.out.println("Your backpack is full, what do you want to throw away ?");
         System.out.println("0 - nothing");
@@ -59,12 +71,21 @@ public class InteractionMenu {
         }
     }
 
+    /**
+     * Cette méthode affiche le contenu d'une liste de Bonus
+     * @param inventory liste d'objets Bonus
+     */
     public void showInventory(ArrayList<AttackEquipment> inventory) {
         for (int i= 0; i < inventory.size(); i++) {
             System.out.println((i+1)+" - "+inventory.get(i).getName());
         }
     }
 
+    /**
+     * Cette classe permet au joueur de choisir un objet parmi une liste
+     * @param inventory
+     * @return le choix du joueur.
+     */
     public int chooseFromInventory(ArrayList<AttackEquipment> inventory) {
         String userEntry;
         int userChoice = -1;

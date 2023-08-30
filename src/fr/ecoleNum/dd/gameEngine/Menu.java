@@ -15,6 +15,9 @@ import java.util.Scanner;
 
 import static fr.ecoleNum.dd.utilities.Utilities.toIntIfValid;
 
+/**
+ * Cette classe va afficher les différents menus qui vont permettre au joueur d'intéragir avec le jeu.
+ */
 public class Menu {
     private boolean run;
     private String menuState;
@@ -25,19 +28,33 @@ public class Menu {
         keyboard = new Scanner(System.in);
     }
 
+    /**
+     * @return renvoie l'état du menu.
+     */
     public String getMenuState() {
         return menuState;
     }
 
+    /**
+     * @return si le menu est actif.
+     */
     public boolean isRunning() {
         return this.run;
     }
 
+    /**
+     * Cette méthode réactive le menu.
+     */
     public void resetMenu() {
         this.run = true;
         menuState = "startMenu";
     }
 
+    /**
+     * Cette méthode est l'écran d'accueil du menu
+     * @param character
+     * @return interrupteur d'arrêt du jeu.
+     */
     public boolean startMenu(Character character) {
 
         System.out.println("What would you like to do ?");
@@ -70,6 +87,11 @@ public class Menu {
         return true;
     }
 
+    /**
+     * Cette méthode permet de choisir un personnage depuis une base de donnée
+     * @param character
+     * @return le personnage choisi.
+     */
     public Character characterSelection(Character character) {
         System.out.println("Choose one of the following characters");
         System.out.println("0 - none");
@@ -97,6 +119,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Cette méthode appelle la création d'un personnage ou sa modification s'il existe déjà.
+     * @param character
+     */
     public void characterCreation(Character character) {
         if (character == null) {
             System.out.println("1 - Choose the class of your character");
@@ -124,6 +150,11 @@ public class Menu {
         }
     }
 
+    /**
+     * Cette méthode permet la création d'un personnage.
+     * @param character
+     * @return le personnage ainsi créé.
+     */
     public Character createCharacter (Character character) {
         String characterClass = null;
 
@@ -156,6 +187,10 @@ public class Menu {
         return character;
     }
 
+    /**
+     * Cette méthode affiche les informations du personnage créé ou sélectionné.
+     * @param character
+     */
     public void informations(Character character) {
         if (character == null) {
             System.out.println("You must create your character first.");
@@ -171,6 +206,10 @@ public class Menu {
         menuState = "characterCreation";
     }
 
+    /**
+     * Cette méthode permet de choisir quel paramètre de notre personnage nous voulons modifier.
+     * @param character
+     */
     public void modifyCharacter(Character character) {
         if (character == null) {
             System.out.println("You must create your character first.");
@@ -198,6 +237,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Cette méthode permet de changer le nom du personnage.
+     * @param character
+     */
     public void changeCharacterName(Character character) {
         System.out.println("Type the new name of your character.");
         character.setName(keyboard.nextLine());
@@ -206,6 +249,10 @@ public class Menu {
         menuState = "modifyCharacter";
     }
 
+    /**
+     * Cette méthode permet de changer la vie du personnage.
+     * @param character
+     */
     public void changeCharacterHealth(Character character) {
         System.out.println("Type the new health of your character between "+character.getMinHealth()+" and "+character.getMaxHealth());
         System.out.println("If you chose something other than "+character.getMinHealth()+" you are weak...");
@@ -218,6 +265,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Cette méthode permet de changer la force du personnage.
+     * @param character
+     */
     public void changeCharacterStrength(Character character) {
         System.out.println("Type the new strength of your character between "+character.getMinStrength()+" and "+character.getMaxStrength());
         System.out.println("If you chose something other than "+character.getMinStrength()+" you are a cheater...");
@@ -230,10 +281,17 @@ public class Menu {
         }
     }
 
+    /**
+     * Cette méthode permet d'attendre une action du joueur avant d'exécuter la suite du logiciel.
+     */
     public void waitForPlayer(){
         keyboard.nextLine();
     }
 
+    /**
+     * Cette méthode force le joueur à rentrer une réponse oui ou non.
+     * @return oui ou non
+     */
     public String yesOrNo(){
         String key = "";
         while (!key.equals("y") && !key.equals("n")) {
@@ -243,6 +301,10 @@ public class Menu {
         return key;
     }
 
+    /**
+     * Cette méthode propose plusieurs choix au joueur au début de chacun de ses tours.
+     * @return le choix du joueur
+     */
     public int nextAction() {
         int choice = -1;
         System.out.println("What do you want to do next ?");
@@ -257,6 +319,10 @@ public class Menu {
         return choice;
     }
 
+    /**
+     * Cette méthode permet l'utilisation d'objets dans l'inventaire.
+     * @param character
+     */
     public void useItem(Character character) {
         ArrayList<Bonus> satchel = character.getSatchel();
         if (!satchel.isEmpty()){
@@ -290,12 +356,21 @@ public class Menu {
         }
     }
 
+    /**
+     * Cette méthode affiche le contenu d'une liste de Bonus
+     * @param inventory liste d'objets Bonus
+     */
     public void showInventory(ArrayList<Bonus> inventory) {
         for (int i= 0; i < inventory.size(); i++) {
             System.out.println((i+1)+" - "+inventory.get(i).getName());
         }
     }
 
+    /**
+     * Cette classe permet au joueur de choisir un objet parmi une liste
+     * @param inventory
+     * @return le choix du joueur.
+     */
     public int chooseFromInventory(ArrayList<Bonus> inventory) {
         String userEntry;
         int userChoice = -1;
@@ -306,6 +381,8 @@ public class Menu {
         return userChoice;
     }
 
+    /**
+     * @return une chaîne de caractère entrée par le joueur     */
     public String userEntry(){
         return keyboard.nextLine();
     }

@@ -17,6 +17,9 @@ import fr.ecoleNum.dd.gameComponents.boardGame.foe.*;
 import fr.ecoleNum.dd.gameComponents.dice.Dice;
 import fr.ecoleNum.dd.gameComponents.dice.D6;
 
+/**
+ * Cette classe va contrôler le déroulement du jeu
+ */
 public class Game {
     private Menu menu;
     private Character character;
@@ -36,10 +39,17 @@ public class Game {
         gameInProgress = false;
     }
 
+    /**
+     * cette méthode permet de vérifier si le jeu est toujours en cours.
+     * @return l'état du jeu
+     */
     public boolean isRunning() {
         return run;
     }
 
+    /**
+     * cette méthode ajoute des objets cases dans la liste qui correspond au plateau de jeu.
+     */
     private void createBoard() {
         for (int i=0; i <64; i++) {
             if (i==45 || i==52 || i==56 || i== 62) {
@@ -68,6 +78,9 @@ public class Game {
         boardGame.set(63, new GiantCockroach());
     }
 
+    /**
+     * cette méthode est appelée au lancement du jeu, elle appelle le menu puis lance des parties.
+     */
     public void start() {
         System.out.println("Welcome to the dungeon of Ragnarok !");
         while (isRunning()) {
@@ -100,6 +113,9 @@ public class Game {
         System.out.println("Goodbye.");
     }
 
+    /**
+     * Cette méthode permet au personnage d'effectuer un tour de jeu tant qu'il est en vie.
+     */
     private void play() {
         gameInProgress = true;
         characterPosition = 0;
@@ -122,6 +138,10 @@ public class Game {
         }
     }
 
+    /**
+     * Cette méthode permet au joueur d'effectuer des actions lors de sa partie.
+     * @throws CharacterDeadException lorsque le personnage n'a plus de vie.
+     */
     private void playATurn() throws CharacterDeadException {
         if (characterPosition!=boardGame.size()) {
             int choice = menu.nextAction();
@@ -139,6 +159,10 @@ public class Game {
         }
     }
 
+    /**
+     * Cette méthode fait avancer le personnage sur le plateau et change les cases en fonction des actions du joueur.
+     * @throws CharacterDeadException lorsque le personnage n'a plus de vie.
+     */
     private void moveForward() throws CharacterDeadException {
         characterPosition += dice.getValue();
         if (characterPosition > boardGame.size()) {
@@ -149,11 +173,15 @@ public class Game {
         checkForDeadFoe();
         checkIfPickedUp();
         if (character.hasFleed()) {
-            fleeing(character);
+            fleeing();
         }
     }
 
-    private void fleeing(Character character) throws CharacterDeadException {
+    /**
+     * Cette méthode faire reculer le personnage et lance une intéraction avec la nouvelle case.
+     * @throws CharacterDeadException lorsque le personnage n'a plus de vie.
+     */
+    private void fleeing() throws CharacterDeadException {
         while (character.hasFleed()) {
             fleeingDice.throwDice();
             characterPosition -= fleeingDice.getValue();
@@ -164,9 +192,14 @@ public class Game {
             character.setHasFleed(false);
             boardGame.get(characterPosition - 1).interaction(character);
             checkForDeadFoe();
+            checkIfPickedUp();
+
         }
     }
 
+    /**
+     * Cette méthode remplace une case monstre par une case cadavre s'il n'a plus de point de vie.
+     */
     private void checkForDeadFoe() {
         int caseNumber = characterPosition-1;
         Case foe = boardGame.get(caseNumber);
@@ -176,6 +209,10 @@ public class Game {
             }
         }
     }
+
+    /**
+     * Cette méthode remplace une case bonus par une case vide si l'objet a été mis dans l'inventaire.
+     */
     private  void checkIfPickedUp() {
         int caseNumber = characterPosition-1;
         Case bonus = boardGame.get(caseNumber);
@@ -186,6 +223,9 @@ public class Game {
         }
     }
 
+    /**
+     * Cette méthode remet la partie à 0 avant d'en lancer une nouvelle.
+     */
     private void setGame() {
         character.setLifeLevel(character.getMinHealth());
         character.setAttackStrength(character.getMinStrength());
