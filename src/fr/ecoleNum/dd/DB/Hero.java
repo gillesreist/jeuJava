@@ -68,17 +68,6 @@ public class Hero {
                 }
             }
         } catch (SQLException e) {
-        } finally {
-            // Fermeture de la connexion
-            try {
-                if (result != null)
-                    result.close();
-                if (statement != null)
-                    statement.close();
-                if (connection != null)
-                    connection.close();
-            } catch (SQLException ignore) {
-            }
         }
 
         return characters;
